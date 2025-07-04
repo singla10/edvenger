@@ -38,5 +38,5 @@ const PORT = process.env.PORT || 5000;
 
 // 9️⃣  Start listening; log a message so you know it worked.
 app.listen(PORT, () =>
-  console.log(`Server listening on http://localhost:${PORT}`)
+  console.log(`Server listening on ${PORT}`)
 );
