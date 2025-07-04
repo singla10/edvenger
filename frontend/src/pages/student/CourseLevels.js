@@ -68,7 +68,10 @@ const CourseLevels = () => {
 
   return (
     <div className="course-levels-page">
-      <h2 className="page-title">{courseId.toUpperCase()} - Levels</h2>
+      <h2 className="page-title">
+        Levels
+  // {courseId.toUpperCase()} - Levels
+      </h2>
 
       {Object.entries(levelData).map(([ageGroup, levels]) => (
         <div key={ageGroup} className="age-group-section">
