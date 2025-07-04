@@ -63,7 +63,7 @@ const PrivacyPolicy = () => {
             <li>Withdraw consent</li>
             <li>Opt out of marketing</li>
           </ul>
-          <p>Contact us at <strong>[your@email.com]</strong>.</p>
+          <p>Contact us at <strong>edvenger@email.com</strong>.</p>
         </section>
 
         <section>
@@ -76,14 +76,7 @@ const PrivacyPolicy = () => {
           <p>We may update this policy. The latest version will be posted here with the effective date.</p>
         </section>
 
-        <section>
-          <h2>10. Contact Us</h2>
-          <p>
-            Email: <strong>[your@email.com]</strong><br />
-            Address: <strong>[City, Country]</strong><br />
-            Website: <strong>[yourdomain.com]</strong>
-          </p>
-        </section>
+       
       </div>
       <Footer />
     </>
