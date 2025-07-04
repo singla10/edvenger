@@ -28,7 +28,7 @@ const ShopContextProvider = ({ children }) => {
   // 5. Login function
   const login = async (formData) => {
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', formData);
+      const res = await axios.post('https://edvenger.onrender.com/api/auth/login', formData);
       const { user, token } = res.data;
 
       // Save in state + localStorage
@@ -48,10 +48,10 @@ const ShopContextProvider = ({ children }) => {
 // 6. Register function (Updated)
 const register = async (formData) => {
   try {
-     await axios.post('http://localhost:5000/api/auth/register', formData);
+     await axios.post('https://edvenger.onrender.com/api/auth/register', formData);
 
     // Optional: get login token + user directly from register route
-    const loginRes = await axios.post('http://localhost:5000/api/auth/login', {
+    const loginRes = await axios.post('https://edvenger.onrender.com/api/auth/login', {
       email: formData.email,
       password: formData.password,
     });
