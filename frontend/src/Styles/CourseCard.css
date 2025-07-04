@@ -1,0 +1,42 @@
+.course-card {
+  background: white;
+  border-radius: 12px;
+  padding: 30px 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  text-align: center;
+  position: relative;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.course-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+}
+
+.course-icon {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 15px;
+}
+
+.course-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  color: #333;
+}
+
+.arrow {
+  position: absolute;
+  bottom: 15px;
+  right: 20px;
+  opacity: 0;
+  font-size: 20px;
+  transition: opacity 0.3s ease-in-out;
+  color: #f97316;
+}
+
+.course-card:hover .arrow {
+  opacity: 1;
+}

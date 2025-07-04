@@ -1,0 +1,69 @@
+.teacher-dashboard {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f9f9f9;
+}
+
+.teacher-sidebar {
+  width: 240px;
+  padding: 20px;
+  background-color: #242565;
+  color: white;
+}
+
+.teacher-sidebar h3 {
+  margin-bottom: 20px;
+  font-size: 1.4rem;
+}
+
+.teacher-sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.teacher-sidebar li {
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
+.teacher-main {
+  flex-grow: 1;
+  padding: 30px;
+}
+
+.dashboard-widgets {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.widget-card {
+  flex: 1;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.upload-section form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.upload-section input,
+.upload-section textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.upload-section button {
+  padding: 10px;
+  background-color: #242565;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
