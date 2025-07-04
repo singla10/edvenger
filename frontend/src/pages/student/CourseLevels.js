@@ -70,7 +70,6 @@ const CourseLevels = () => {
     <div className="course-levels-page">
       <h2 className="page-title">
         Levels
-  // {courseId.toUpperCase()} - Levels
       </h2>
 
       {Object.entries(levelData).map(([ageGroup, levels]) => (
