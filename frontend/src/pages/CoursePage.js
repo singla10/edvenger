@@ -16,7 +16,7 @@ const CoursePage = () => {
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/courses/${courseId}`);
+        const res = await axios.get(`https://edvenger.onrender.com/api/courses/${courseId}`);
         setCourse(res.data);
       } catch (err) {
         console.error("Course fetch error:", err);
