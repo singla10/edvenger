@@ -15,7 +15,7 @@ const StudentDash = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/courses");
+        const res = await axios.get("https://edvenger.onrender.com/api/courses");
         setAllCourses(res.data);
       } catch (err) {
         console.error("Failed to load courses", err);
