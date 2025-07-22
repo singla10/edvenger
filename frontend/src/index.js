@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import './index.css';
 
 // 1️⃣  Attach the React tree to <div id="root"> in public/index.html
 const root = ReactDOM.createRoot(document.getElementById('root'));

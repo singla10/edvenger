@@ -1,9 +1,11 @@
 import React, { createContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
 
 // 1. Create Context
 export const ShopContext = createContext();
+
 
 // 2. Context Provider
 const ShopContextProvider = ({ children }) => {
@@ -12,7 +14,9 @@ const ShopContextProvider = ({ children }) => {
   const [isLoggedIn , setLoggedIn] = useState(!!localStorage.getItem('token'));
   const [courses, setCourses] = useState([]);
   const [token, setToken] = useState(null);
+  const navigate = useNavigate();
   
+  const BASE_URL = 'http://localhost:5000';
 
   // 4. On app load, get user from localStorage (if available)
   useEffect(() => {
@@ -28,7 +32,7 @@ const ShopContextProvider = ({ children }) => {
   // 5. Login function
   const login = async (formData) => {
     try {
-      const res = await axios.post('https://edvenger.onrender.com/api/auth/login', formData);
+      const res = await axios.post(`${BASE_URL}/api/auth/login`, formData);
       const { user, token } = res.data;
 
       // Save in state + localStorage
@@ -38,7 +42,8 @@ const ShopContextProvider = ({ children }) => {
       localStorage.setItem("token", token);
 
       alert("Login successful");
-      window.location.href = `/${user.role}`;
+      // window.location.href = `/${user.role}`;
+      navigate("/profile");
     } catch (err) {
       alert(err.response?.data?.message || "Login failed");
     }
@@ -48,33 +53,41 @@ const ShopContextProvider = ({ children }) => {
 // 6. Register function (Updated)
 const register = async (formData) => {
   try {
-     await axios.post('https://edvenger.onrender.com/api/auth/register', formData);
+    // Send registration request
+    console.log("BASE_URL:", BASE_URL);
+    console.log("Register URL:", `${BASE_URL}/api/auth/register`);
+    await axios.post(`${BASE_URL}/api/auth/register`, formData);
 
-    // Optional: get login token + user directly from register route
-    const loginRes = await axios.post('https://edvenger.onrender.com/api/auth/login', {
+    // Immediately log in the user after successful registration
+    const loginRes = await axios.post(`${BASE_URL}/api/auth/login`, {
       email: formData.email,
       password: formData.password,
     });
 
     const { user, token } = loginRes.data;
 
+    // Set user and token globally using ShopContext
     setUser(user);
     setToken(token);
+
+    // Persist in localStorage
     localStorage.setItem("user", JSON.stringify(user));
     localStorage.setItem("token", token);
 
+    alert("Registered and logged in successfully ✅");
+
+    // Redirect based on role (optional)
+    // window.location.href = `/${user.role}`;
+
     return user;
 
-    alert("Registered and logged in successfully");
-
-    // ✅ Redirect after successful login based on role
-   // window.location.href = `/${user.role}`;
-
   } catch (err) {
-    alert(err.response?.data?.message || "Registration failed");
+    const errorMsg = err.response?.data?.message || "Registration failed ❌";
+    alert(errorMsg);
+    console.error("Registration Error:", err.response?.data, errorMsg);
+      alert(err.response?.data?.message || err.message || "Registration failed ❌");
   }
 };
-
 
   // 7. Logout
   const logout = () => {

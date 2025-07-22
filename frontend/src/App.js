@@ -12,13 +12,21 @@ import CourseContent from './pages/student/CourseContent';
 import CourseLevels from './pages/student/CourseLevels';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsAndConditions from './pages/TermsAndCondition.js';
+import Profile from './pages/Profile.js';
+import InstituteDash from './pages/institute/InstituteDash.js';
+import DashboardHome from './pages/institute/DashHome.js';
+import EnrCourses from './pages/institute/EnrCourses.js';
+import EnrStudents from './pages/institute/EnrStudent.js';
+import Teachers from './pages/institute/EnrTeacher.js';
+import InsSettings from './pages/institute/Settings.js';
 
 
 function App() {
   // 1️⃣  <BrowserRouter> listens for URL changes (Single-Page-App).
   return (
-    <ShopContextProvider>
+    
     <BrowserRouter>
+      <ShopContextProvider>
       {/* 2️⃣  <Routes> chooses exactly one <Route> to render. */}
       <Routes>
         <Route path="/" element={<Home/>}/>
@@ -35,15 +43,24 @@ function App() {
         <Route path="/admin/*" element={<AdminDash />} />
         <Route path="/teacher/*" element={<TeacherDash />} />
         <Route path="/student/*" element={<StudentDash />} />
+        <Route path="/profile" element={<Profile />} />
 
-        {/* 4️⃣  Root path simply redirects to a login page (add later). */}
-        <Route path="/" element={<Navigate to="/student" />} />
+        {/*   Institute Dashboard with nested routes. */}
+        
+        <Route path="/institute/dashboard" element={<InstituteDash />} >
+        <Route index element={<DashboardHome />} />
+        <Route path="courses" element={<EnrCourses/>} />
+        <Route path="students" element={<EnrStudents/>} />
+        <Route path="teachers" element={<Teachers/>} />
+        <Route path="settings" element={<InsSettings/>} /> 
+        </Route>
 
-        {/* 5️⃣  Catch - all 404 page.
-        <Route path="*" element={<NotFound />} /> */}
+
+        
       </Routes>
+      </ShopContextProvider>
     </BrowserRouter>
-    </ShopContextProvider>
+   
   );
 }
 

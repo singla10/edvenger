@@ -8,7 +8,7 @@ import Model from '../assets/model.png';
 import Board from '../assets/motherboard.png';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import "../Styles/Home.css";
+// import "../Styles/Home.css";
 import NeuroShowcase from '../components/NeuroShowcase';
 import Lottie from "lottie-react";
 import robotAnimation from "../assets/robot-banner.json";
@@ -56,47 +56,48 @@ const Home = () => {
       <Navbar ref={navbarRef} />
 
       <section
-        ref={heroRef}
-        className={`hero-section fade-in ${heroVisible ? 'visible' : ''}`}
+       ref={heroRef}
+       className={`fade-in ${heroVisible ? 'visible' : ''} bg-gradient-to-r from-purple-500 to-indigo-600 text-white min-h-screen flex flex-col md:flex-row items-center justify-between px-6 md:px-16 py-16`}
       >
-        <div className="hero-left">
-          <h1>Let's Start Your Journey</h1>
-          <p>Empower your future with STEM-powered education.</p>
-          <button>Enroll Now</button>
-        </div>
-        <div className="hero-right">
-           <Lottie animationData={robotAnimation} loop={true} />
-          {/* <Player
-            autoplay
-            loop
-            src={robotAnimation}
-            style={{ width: "300px", height: "300px" }}/> */}
+      <div className="md:w-1/2 space-y-6">
+      <h1 className="text-4xl md:text-5xl font-extrabold leading-tight">
+      Let's Start Your Journey
+      </h1>
+      <p className="text-lg md:text-xl">
+      Empower your future with STEM-powered education.
+      </p>
+      <button className="mt-4 px-6 py-3 bg-white text-indigo-700 font-semibold rounded shadow hover:bg-gray-100 transition">
+      Enroll Now
+      </button>
+      </div>
 
-          {/* <img alt="STEM Robot" /> */}
-        </div>
+      <div className="md:w-1/2 mt-10 md:mt-0">
+      <Lottie animationData={robotAnimation} loop={true} className="w-full h-full max-w-md mx-auto" />
+      </div>
       </section>
 
       <div
         ref={neuroRef}
-        className={`fade-in ${neuroVisible ? 'visible' : ''}`}
+        className={`fade-in ${neuroVisible ? 'visible' : ''} px-4 md:px-16 py-10 `}
       >
         <NeuroShowcase />
       </div>
 
       <section
-        ref={categoriesRef}
-        className={`categories-section fade-in ${categoriesVisible ? 'visible' : ''}`}
+      ref={categoriesRef}
+      className={`fade-in ${categoriesVisible ? 'visible' : ''} bg-gray-50 px-6 md:px-16 py-16`}
       >
-        <h2>Our Course Categories</h2>
-        <div className="categories-grid">
-          <CourseCard title="Coding" icon={programming} link="coding" />
-          <CourseCard title="Robotics" icon={Robot} link="robotics" />
-          <CourseCard title="Mathematics" icon={Math} link="mathematics" />
-          <CourseCard title="Artificial Intelligence" icon={AI} link="AI" />
-          <CourseCard title="3D Modelling" icon={Model} link="3d-modelling" />
-          <CourseCard title="Ardunio/ Electronics" icon={Board} link="ardunio-electronics" />
-        </div>
-      </section>
+     <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Our Course Categories</h2>
+     <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+     <CourseCard title="Coding" icon={programming} link="coding" />
+     <CourseCard title="Robotics" icon={Robot} link="robotics" />
+     <CourseCard title="Mathematics" icon={Math} link="mathematics" />
+     <CourseCard title="Artificial Intelligence" icon={AI} link="AI" />
+     <CourseCard title="3D Modelling" icon={Model} link="3d-modelling" />
+     <CourseCard title="Ardunio/ Electronics" icon={Board} link="ardunio-electronics" />
+     </div>
+     </section>
+
 
       <section
         ref={aboutRef}

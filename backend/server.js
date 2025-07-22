@@ -5,6 +5,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes.js';
 import courseRoutes from "./routes/courseRoutes.js";
+import instituteRoutes from "./routes/instituteRoutes.js";
 
 // 2️⃣  Bring in our database helper from step 1-a.
 import connectDB from './config/db.js';
@@ -26,6 +27,8 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 
 app.use("/api/courses", courseRoutes);
+
+app.use("/api/institute", instituteRoutes);
 
 // 7️⃣  Basic test route so you can confirm the server responds.
 //     Later you’ll mount /api/admin, /api/teacher, /api/student, etc.
