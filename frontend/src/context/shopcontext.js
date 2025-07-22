@@ -16,7 +16,7 @@ const ShopContextProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const navigate = useNavigate();
   
-  const BASE_URL = 'http://localhost:5000';
+  const BASE_URL = 'https://edvengerbackend.vercel.app';
 
   // 4. On app load, get user from localStorage (if available)
   useEffect(() => {
