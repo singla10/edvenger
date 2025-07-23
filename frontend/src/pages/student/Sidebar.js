@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { ShopContext } from "../../context/shopcontext";
+//import { ShopContext } from "../../context/shopcontext";
 import "../../Styles/Sidebar.css";
 
 const Sidebar = () => {

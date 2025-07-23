@@ -1,11 +1,11 @@
 import { useContext} from "react";
 import { useNavigate } from "react-router-dom";
-import { ShopContext } from "../context/shopcontext";
+import { useShop } from "../context/shopcontext";
 import "../Styles/CourseCard.css";
 
 const CourseCard = ({ title, icon, link }) => {
   const navigate = useNavigate();
-  const { user } = useContext(ShopContext);  // ✅ Context access
+  const { user } = useShop();  // ✅ Context access
 
   const handleClick = () => {
     if (user && user.role === "student") {

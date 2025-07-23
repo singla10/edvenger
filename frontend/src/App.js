@@ -7,7 +7,7 @@ import AdminDash from './pages/admin/AdminDash';
 import TeacherDash from './pages/teacher/TeacherDash';
 import StudentDash from './pages/student/StudentDash';
 import CoursePage from './pages/CoursePage';
-import ShopContextProvider from './context/shopcontext';
+import {ShopContextProvider} from './context/shopcontext';
 import CourseContent from './pages/student/CourseContent';
 import CourseLevels from './pages/student/CourseLevels';
 import PrivacyPolicy from './pages/PrivacyPolicy';

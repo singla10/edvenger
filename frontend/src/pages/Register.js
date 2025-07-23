@@ -1,133 +1,77 @@
-import React, { useState, useContext} from "react";
-import { ShopContext } from "../context/shopcontext"; // Adjust the path if needed
+import { useState } from 'react';
+import { useShop } from '../context/shopcontext';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
-  const { register } = useContext(ShopContext);
+  const { registerUser } = useShop();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    name: "",
-    instituteName: "",
-    email: "",
-    password: "",
-    role: "student", // Default role
+    name: '',
+    email: '',
+    phone: '',
+    password: '',
+    instituteName: '',
+    role: 'student', // You can change this for admin, teacher etc.
   });
 
-  const [loading, setLoading] = useState(false);
+   const [showField, setShowField] = useState(false);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData({...formData, [e.target.name]: e.target.value});
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-
     try {
-      await register(formData);
+      await registerUser(formData);
+      alert('Registered successfully');
+      navigate('/profile');
     } catch (err) {
-      console.error("Register failed", err);
-    } finally {
-      setLoading(false);
+      alert(err);
     }
   };
 
-   const isStudentOrTeacher = formData.role === "student" || formData.role === "teacher";
-  const isInstitute = formData.role === "institute";
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md space-y-6"
-      >
-        <h2 className="text-2xl font-semibold text-center text-gray-700">Register</h2>
+    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+      <form onSubmit={handleSubmit} className="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
+        <h2 className="text-2xl font-bold mb-6 text-center">Student Register</h2>
 
-        {/* Role */}
-        <div>
-          <label className="block mb-1 text-sm font-medium text-gray-700">Role</label>
-          <select
-            name="role"
-            value={formData.role}
-            onChange={handleChange}
-            className="w-full border border-gray-300 p-2 rounded-lg"
-          >
-            <option value="student">Student</option>
-            <option value="teacher">Teacher</option>
-            <option value="institute">Institute</option>
-          </select>
-        </div>
+        <input type="text" name="name" placeholder="Full Name" onChange={handleChange} className="w-full mb-4 p-3 border rounded" required />
+        <input type="email" name="email" placeholder="Email" onChange={handleChange} className="w-full mb-4 p-3 border rounded" required />
+        <input type="text" name="phone" placeholder="Phone Number" onChange={handleChange} className="w-full mb-4 p-3 border rounded" required />
+       {/* <input type="text" name="instituteName" placeholder="Institute Name" onChange={handleChange} className="w-full mb-4 p-3 border rounded" required /> */}
+        <input type="password" name="password" placeholder="Password" onChange={handleChange} className="w-full mb-4 p-3 border rounded" required />
 
-        {/* Name (not required for institute) */}
-        {isStudentOrTeacher && (
-          <div>
-            <label className="block mb-1 text-sm font-medium text-gray-700">Name</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              className="w-full border border-gray-300 p-2 rounded-lg"
-              placeholder="Your name"
-            />
-          </div>
-        )}
+          {/* ✅ Checkbox */}
+        <label className="flex items-center gap-2 mb-2">
+          <input
+            type="checkbox"
+            checked={showField}
+            onChange={(e) => setShowField(e.target.checked)}
+          />
+          <span className="text-sm">Are you from a school?</span>
+        </label>
 
-                {/* Institute Name Field for Institute */}
-        {isInstitute && (
-          <div>
-            <label className="block mb-1 text-sm font-medium text-gray-700">Institute Name</label>
+         <div
+          className={`transition-all duration-300 overflow-hidden ${
+            showField ? 'max-h-40 mt-2' : 'max-h-0'
+          }`}
+        >
+          {showField && (
             <input
               type="text"
               name="instituteName"
               value={formData.instituteName}
               onChange={handleChange}
-              required
-              className="w-full border border-gray-300 p-2 rounded-lg"
-              placeholder="Institute name"
+              placeholder="Institute Name"
+              className="w-full p-2 border rounded mt-2"
+              required={showField}
             />
-          </div>
-        )}
-
-        {/* Email */}
-        <div>
-          <label className="block mb-1 text-sm font-medium text-gray-700">Email</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            className="w-full border border-gray-300 p-2 rounded-lg"
-            placeholder="example@email.com"
-          />
+          )}
         </div>
 
-        {/* Password */}
-        <div>
-          <label className="block mb-1 text-sm font-medium text-gray-700">Password</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-            className="w-full border border-gray-300 p-2 rounded-lg"
-            placeholder="password"
-          />
-        </div>
-
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
-          disabled={loading}
-        >
-          {loading ? "Registering..." : "Register"}
-        </button>
+        <button type="submit" className="w-full bg-blue-600 text-white py-3 rounded hover:bg-blue-700">Register</button>
       </form>
     </div>
   );

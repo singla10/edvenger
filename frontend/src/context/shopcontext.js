@@ -1,109 +1,56 @@
-import React, { createContext, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-
+import React, { createContext, useContext, useState } from 'react';
 import axios from 'axios';
+import { useEffect } from 'react';
 
-// 1. Create Context
-export const ShopContext = createContext();
+// ✅ BASE URL (no VITE)
+const BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api';
 
+const ShopContext = createContext();
 
-// 2. Context Provider
-const ShopContextProvider = ({ children }) => {
-  // 3. State
-  const [user, setUser] = useState(null);
-  const [isLoggedIn , setLoggedIn] = useState(!!localStorage.getItem('token'));
-  const [courses, setCourses] = useState([]);
-  const [token, setToken] = useState(null);
-  const navigate = useNavigate();
-  
-  const BASE_URL = 'https://edvengerbackend.vercel.app';
+export const ShopContextProvider = ({ children }) => {
+  const [currentUser, setCurrentUser] = useState(null);
 
-  // 4. On app load, get user from localStorage (if available)
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    const storedToken = localStorage.getItem("token");
-
-    if (storedUser && storedToken) {
-      setUser(JSON.parse(storedUser));
-      setToken(storedToken);
-    }
-  }, []);
-
-  // 5. Login function
-  const login = async (formData) => {
-    try {
-      const res = await axios.post(`${BASE_URL}/api/auth/login`, formData);
-      const { user, token } = res.data;
-
-      // Save in state + localStorage
-      setUser(user);
-      setToken(token);
-      localStorage.setItem("user", JSON.stringify(user));
-      localStorage.setItem("token", token);
-
-      alert("Login successful");
-      // window.location.href = `/${user.role}`;
-      navigate("/profile");
-    } catch (err) {
-      alert(err.response?.data?.message || "Login failed");
-    }
-  };
-
-  // 6. Register function
-// 6. Register function (Updated)
-const register = async (formData) => {
-  try {
-    // Send registration request
-    console.log("BASE_URL:", BASE_URL);
-    console.log("Register URL:", `${BASE_URL}/api/auth/register`);
-    await axios.post(`${BASE_URL}/api/auth/register`, formData);
-
-    // Immediately log in the user after successful registration
-    const loginRes = await axios.post(`${BASE_URL}/api/auth/login`, {
-      email: formData.email,
-      password: formData.password,
-    });
-
-    const { user, token } = loginRes.data;
-
-    // Set user and token globally using ShopContext
-    setUser(user);
-    setToken(token);
-
-    // Persist in localStorage
-    localStorage.setItem("user", JSON.stringify(user));
-    localStorage.setItem("token", token);
-
-    alert("Registered and logged in successfully ✅");
-
-    // Redirect based on role (optional)
-    // window.location.href = `/${user.role}`;
-
-    return user;
-
-  } catch (err) {
-    const errorMsg = err.response?.data?.message || "Registration failed ❌";
-    alert(errorMsg);
-    console.error("Registration Error:", err.response?.data, errorMsg);
-      alert(err.response?.data?.message || err.message || "Registration failed ❌");
+  const storedUser = localStorage.getItem('user');
+  if (storedUser) {
+    setCurrentUser(JSON.parse(storedUser));
   }
-};
+}, []);
 
-  // 7. Logout
-  const logout = () => {
-    setUser(null);
-    setToken(null);
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
-    window.location.href = "/login";
+  // ✅ Register API function
+  const registerUser = async (userData) => {
+    try {
+      const response = await axios.post(`${BASE_URL}/auth/register`, userData);
+      return response.data; // send this to frontend (register.js) to decide what to do next
+    } catch (error) {
+      throw error.response?.data?.message || 'Registration failed';
+    }
   };
 
-  // 8. Provide all values
+   const loginUser = async (email, password) => {
+    try {
+
+        console.log("🟡 Sending login request to backend with:", { email, password });
+
+      const res = await axios.post(`${BASE_URL}/auth/login`, { email, password });
+
+       console.log("🟢 Login success:", res.data);
+
+      setCurrentUser(res.data); // Store user globally
+      localStorage.setItem('user', JSON.stringify(res.data)); // Optional: persist in localStorage
+
+      return { success: true };
+    } catch (error) {
+       console.error("🔴 Login failed:", error.response?.data || error.message);
+      return { success: false, message: error.response?.data?.message || "Login failed" };
+    }
+  };
+
   return (
-    <ShopContext.Provider value={{ user, token, login, register, logout }}>
+    <ShopContext.Provider value={{ registerUser, loginUser, currentUser, setCurrentUser }}>
       {children}
     </ShopContext.Provider>
   );
 };
 
-export default ShopContextProvider;
+export const useShop = () => useContext(ShopContext);
