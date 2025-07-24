@@ -71,9 +71,15 @@ export const adminLogin = async (req, res) => {
   const ADMIN_PASSWORD = "admin123"; // You can hash this too if needed
 
   if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+
+    const token = jwt.sign(
+      { username: "admin", role: "admin" },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    )
     return res.status(200).json({
       success: true,
-      token: "admin-token",
+      token,
       message: "Admin login successful",
     });
   } else {

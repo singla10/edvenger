@@ -5,6 +5,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes.js';
 import courseRoutes from "./routes/courseRoutes.js";
+//import connectCloudinary from './config/cloudinary.js';
 
 import protectedRoutes from './routes/protectedRoutes.js';
 
@@ -12,11 +13,16 @@ import protectedRoutes from './routes/protectedRoutes.js';
 // 2️⃣  Bring in our database helper from step 1-a.
 import connectDB from './config/db.js';
 
+// const upload = multer({ storage });
+// export default upload;
+
 // 3️⃣  Read environment variables from .env into process.env.
 dotenv.config();
 
 // 4️⃣  Connect to MongoDB before we start accepting HTTP requests.
 connectDB();
+
+// connectCloudinary(); 
 
 // 5️⃣  Create an Express application instance.
 const app = express();
@@ -25,6 +31,7 @@ const app = express();
 //     without CORS errors *and* automatically parse JSON bodies.
 app.use(cors());
 app.use(express.json());
+// app.use("/uploads", express.static("uploads")); 
 
 app.use('/api/auth', authRoutes);
 

@@ -1,5 +1,5 @@
 // backend/controllers/instituteController.js
-import Institute from "../models/instituteModel.js";
+import Institute from "../models/projectmodel.js";
 import InstStudent from "../models/InstStudent.js";
 import InstTeacher from "../models/InstTeacher.js";
 

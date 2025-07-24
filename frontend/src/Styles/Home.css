@@ -106,3 +106,31 @@
     transform: translateY(-10px);
   }
 }
+
+.box{
+  height: 300px;
+  width: 300px;
+  background-color: rgb(16, 16, 17);
+  border-radius: 10px;
+  position: absolute;
+
+  animation-name: robotAnimation ;
+  animation-duration: 6s;
+  animation-delay: 1s;
+}
+
+@keyframes robotAnimation {
+  from{
+    right : 0;
+    rotate:0;
+    top: 50px;    
+  }
+  to{
+    
+    right:75%;
+    top: 75%;
+    rotate:360deg;
+
+  }
+  
+}

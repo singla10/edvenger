@@ -26,19 +26,3 @@ const CourseCard = ({ title, icon, link }) => {
 
 export default CourseCard;
 
-// import "../tyles/CourseCard.css";
-
-// const CourseCard = ({ title, duration, progress, image }) => {
-//   return (
-//     <div className="course-card">
-//       <img src={image} alt={title} />
-//       <h4>{title}</h4>
-//       <p>{duration}</p>
-//       <div className="progress-bar">
-//         <div className="filled" style={{ width: progress }}></div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default CourseCard;

@@ -5,25 +5,10 @@ import { protect, authorizeRoles } from '../middleware/auth.js';
 
 const router = express.Router();
 
-const ADMIN_USERNAME = "admin";
-const ADMIN_PASSWORD = "admin123"; 
+// const ADMIN_USERNAME = "admin";
+// const ADMIN_PASSWORD = "admin123"; 
 
-router.post('/admin/login', (req, res) => {
-  const { username, password } = req.body;
-
-  if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-    return res.status(200).json({
-      success: true,
-      token: "admin-token",
-      message: "Admin login successful",
-    });
-  } else {
-    return res.status(401).json({
-      success: false,
-      message: "Invalid admin credentials",
-    });
-  }
-});
+router.post('/admin/login', adminLogin);
 
 router.post('/register', register);
 router.post('/login', loginUser);

@@ -8,7 +8,7 @@ import Model from '../assets/model.png';
 import Board from '../assets/motherboard.png';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-// import "../Styles/Home.css";
+import "../Styles/Home.css";
 import NeuroShowcase from '../components/NeuroShowcase';
 import Lottie from "lottie-react";
 import robotAnimation from "../assets/robot-banner.json";
@@ -59,7 +59,7 @@ const Home = () => {
        ref={heroRef}
        className={`fade-in ${heroVisible ? 'visible' : ''} bg-gradient-to-r from-purple-500 to-indigo-600 text-white min-h-screen flex flex-col md:flex-row items-center justify-between px-6 md:px-16 py-16`}
       >
-      <div className="md:w-1/2 space-y-6">
+      {/* <div className="md:w-1/2 space-y-6">
       <h1 className="text-4xl md:text-5xl font-extrabold leading-tight">
       Let's Start Your Journey
       </h1>
@@ -69,10 +69,10 @@ const Home = () => {
       <button className="mt-4 px-6 py-3 bg-white text-indigo-700 font-semibold rounded shadow hover:bg-gray-100 transition">
       Enroll Now
       </button>
-      </div>
+      </div> */}
 
-      <div className="md:w-1/2 mt-10 md:mt-0">
-      <Lottie animationData={robotAnimation} loop={true} className="w-full h-full max-w-md mx-auto" />
+      <div className="box">
+      {/* <Lottie animationData={robotAnimation} loop={true} className="w-full h-full max-w-md mx-auto" /> */}
       </div>
       </section>
 
