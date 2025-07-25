@@ -107,7 +107,7 @@
   }
 }
 
-.box{
+/* .box{
   height: 300px;
   width: 300px;
   background-color: rgb(16, 16, 17);
@@ -115,11 +115,14 @@
   position: absolute;
 
   animation-name: robotAnimation ;
-  animation-duration: 6s;
+  animation-duration: 10s;
   animation-delay: 1s;
-}
+  animation-fill-mode: forwards;
+  animation-direction: alternate;
+  animation-timing-function: ease-in;  /* graph of speed */
 
-@keyframes robotAnimation {
+
+/*@keyframes robotAnimation {
   from{
     right : 0;
     rotate:0;
@@ -133,4 +136,5 @@
 
   }
   
-}
+} */
+

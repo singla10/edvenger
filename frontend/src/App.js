@@ -9,6 +9,7 @@ import {ShopContextProvider} from './context/shopcontext';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsAndConditions from './pages/TermsAndCondition.js';
 import Profile from './pages/Profile.js';
+import CourseDetail from './pages/CourseDetail.js';
 
 
 
@@ -24,6 +25,7 @@ function App() {
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path="/courses" element={<CoursePage/>}/>
+        <Route path="/courses/:id" element={<CourseDetail/>}/>
         <Route path="/policy" element={<PrivacyPolicy/>} />
         <Route path="/terms" element={<TermsAndConditions/>}/>
 

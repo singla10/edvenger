@@ -26,3 +26,8 @@ code {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* custom triangle clip class */
+.clip-triangle {
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+}
