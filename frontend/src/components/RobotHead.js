@@ -23,6 +23,26 @@ const FloatingDroneBot = () => {
       ease: "sine.inOut",
     });
 
+    // Head tilt animation
+    gsap.to(bot, {
+      rotate: 8,
+      repeat: -1,
+      yoyo: true,
+      duration: 2.5,
+      ease: "sine.inOut",
+      delay: 0.5,
+    });
+
+    // Eyes glow and pulse
+    gsap.to([leftEye, rightEye], {
+      boxShadow: "0 0 16px 6px #22d3ee",
+      backgroundColor: "#67e8f9",
+      repeat: -1,
+      yoyo: true,
+      duration: 1.2,
+      ease: "sine.inOut",
+    });
+
     // Blinking animation
     const blink = () => {
       gsap.to([leftEye, rightEye], {
@@ -40,7 +60,7 @@ const FloatingDroneBot = () => {
   }, []);
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-500 to-purple-700">
+    <div className="flex items-center justify-center" style={{ background: "transparent" }}>
       <div ref={botRef} className="relative w-48 h-48">
         {/* Body wrapper to add top rounded corners */}
         <div className="relative w-full h-full flex justify-center items-start">
@@ -59,10 +79,12 @@ const FloatingDroneBot = () => {
             <div
               ref={leftEyeRef}
               className="w-4 h-4 bg-cyan-400 rounded-full shadow-md"
+              style={{ boxShadow: "0 0 8px 2px #22d3ee" }}
             ></div>
             <div
               ref={rightEyeRef}
               className="w-4 h-4 bg-cyan-400 rounded-full shadow-md"
+              style={{ boxShadow: "0 0 8px 2px #22d3ee" }}
             ></div>
           </div>
 

@@ -71,7 +71,7 @@ const Home = () => {
 
       <section
        ref={heroRef}
-       className={`fade-in ${heroVisible ? 'visible' : ''} bg-gradient-to-r from-purple-500 to-indigo-600 text-white min-h-screen flex flex-col md:flex-row items-center justify-between px-6 md:px-16 py-16`}
+       className={`fade-in ${heroVisible ? 'visible' : ''} bg-gradient-to-r from-black via-black/80 to-gray-800 [background-size:100%_100%] [background-image:linear-gradient(to_right,_black_60%,_#1f2937_100%)] text-white min-h-[80vh] flex flex-col md:flex-row items-center justify-between px-6 md:px-16 py-12`}
       >
       <div className="md:w-1/2 space-y-6">
       <h1 className="text-4xl md:text-5xl font-extrabold leading-tight">

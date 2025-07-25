@@ -30,7 +30,7 @@ const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
         {/* Logo */}
-        <div className="text-2xl font-bold text-indigo-600">
+        <div className="text-2xl font-bold text-gray-600">
           <Link to="/">StemElix</Link>
         </div>
 
