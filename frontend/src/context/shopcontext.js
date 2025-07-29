@@ -9,6 +9,7 @@ const ShopContext = createContext();
 
 export const ShopContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
+  const [courses, setCourses] = useState([]);
 
   useEffect(() => {
   const storedUser = localStorage.getItem('user');
@@ -46,8 +47,21 @@ export const ShopContextProvider = ({ children }) => {
     }
   };
 
+  
+
+  // ✅ Fetch courses for students
+  const fetchCourses = async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}/courses/all`);
+      setCourses(res.data.courses  || []);
+    } catch (err) {
+      console.error("Failed to load courses:", err.response?.data?.message);
+    }
+  };
+
+
   return (
-    <ShopContext.Provider value={{ registerUser, loginUser, currentUser, setCurrentUser }}>
+    <ShopContext.Provider value={{ registerUser, loginUser, currentUser, setCurrentUser,fetchCourses, courses }}>
       {children}
     </ShopContext.Provider>
   );

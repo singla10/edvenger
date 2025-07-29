@@ -64,28 +64,49 @@ export const loginUser = async (req, res) => {
 
 // backend/controllers/authController.js
 export const adminLogin = async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
-  // Hardcoded admin credentials
-  const ADMIN_USERNAME = "admin";
-  const ADMIN_PASSWORD = "admin123"; // You can hash this too if needed
+  console.log('🔍 Admin login attempt:', { email, password: password ? 'PROVIDED' : 'MISSING' });
 
-  if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+  try {
+    const admin = await User.findOne({ email, role: 'admin'});
+    console.log('🔍 Admin found:', admin ? 'YES' : 'NO');
+    
+    if (!admin) {
+      console.log('❌ Admin not found for email:', email);
+      return res.status(404).json({ success: false, message: "Admin not found" });
+    }
+    
+    // Compare password
+    const isMatch = await bcrypt.compare(password, admin.password);
+   if (!isMatch) {
+    return res.status(401).json({
+      success: false, 
+      message: "Invalid admin credentials",
+     });
+  }
 
     const token = jwt.sign(
-      { username: "admin", role: "admin" },
-      process.env.JWT_SECRET,
+      { id: admin._id, role: "admin" },
+      process.env.JWT_SECRET, 
       { expiresIn: "1d" }
-    )
+    );
     return res.status(200).json({
       success: true,
       token,
       message: "Admin login successful",
     });
-  } else {
-    return res.status(401).json({
+  } catch (err) {
+    console.error("Admin login error:", err);
+    return res.status(500).json({
       success: false,
-      message: "Invalid admin credentials",
+      message: "Internal server error",
     });
   }
 };
+
+
+// Hardcoded admin credentials
+// const ADMIN_USERNAME = "admin";
+// const ADMIN_PASSWORD = "admin123"; // You can hash this too if needed
+

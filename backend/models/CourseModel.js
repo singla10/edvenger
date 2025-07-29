@@ -1,29 +1,41 @@
 // backend/models/CourseModel.js
 import mongoose from "mongoose";
 
+const lectureSchema = new mongoose.Schema({
+  lectureId: {type:String, required:true},
+},{_id:false})
+
+const chapterSchema = new mongoose.Schema({
+  chapterId: {type:String, required:true},
+  cahpterOrder: {type:Number, required:true},
+  ChapterTitle: { type:String, required:true},
+  chapterContent : [lectureSchema]
+
+}, {_id: false});
+
 const CourseSchema = new mongoose.Schema({
   title: { type: String, required: true },
   categoryId: { 
     // type: mongoose.Schema.Types.ObjectId, 
     type: String, 
-    enum: ['Junior', 'Explorer','Master'], 
+   // enum: ['Junior', 'Explorer','Master'], 
     required: true 
   },
-  levelNumber: { type: Number, required: true }, // 1, 2, 3
-  description: { type: String, required: true },
-  programHighlights: [{ type: String, required: true }],
-  thumbnail: { type: String, required: true },
-  videoUrl: { type: String, 
-    required: true },
-  duration: { type: Number, required: true },
-  gradeRange: {
-    min: { type: Number, required: true },
-    max: { type: Number, required: true }
-  },
-  price: {
-    type: Number,
-    required: true
-  },
+   levelNumber: { type: Number, required: true }, // 1, 2, 3
+   description: { type: String, required: true },
+  // programHighlights: [{ type: String, required: true }],
+   CourseThumbnail: { type: String, required: true },
+  // videoUrl: { type: String, 
+  //   required: true },
+   duration: { type: Number, required: true },
+    gradeRange: {
+     min: { type: Number, required: true },
+     max: { type: Number, required: true }
+     },
+     price: {
+     type: Number, 
+     required: true
+     },
   
   // Admin management fields
   status: {
@@ -43,13 +55,13 @@ const CourseSchema = new mongoose.Schema({
     default: Date.now
   },
   
-  quiz: [
-    {
-      question: { type: String, required: true },
-      options: { type: [String], required: true },
-      answer: { type: String, required: true } // correct answer
-    }
-  ]
+  // quiz: [
+  //   {
+  //     question: { type: String, required: true },
+  //     options: { type: [String], required: true },
+  //     answer: { type: String, required: true } // correct answer
+  //   }
+  // ]
 });
 
 // Compound index for efficient queries

@@ -5,7 +5,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes.js';
 import courseRoutes from "./routes/courseRoutes.js";
-//import connectCloudinary from './config/cloudinary.js';
+import connectCloudinary from './config/cloudinary.js';
 
 import protectedRoutes from './routes/protectedRoutes.js';
 
@@ -22,7 +22,7 @@ dotenv.config();
 // 4️⃣  Connect to MongoDB before we start accepting HTTP requests.
 connectDB();
 
-// connectCloudinary(); 
+ connectCloudinary(); 
 
 // 5️⃣  Create an Express application instance.
 const app = express();

@@ -1,54 +1,71 @@
+
 import Course from '../models/CourseModel.js';
+import { v2 as cloudinary} from 'cloudinary';
 
 export const createCourse = async (req, res) => {
   try {
-    const { title, categoryId, levelNumber, description, 
-      thumbnail, programHighlights, duration, gradeRangeMin, gradeRangeMax,
-      price, status, order, featured, quiz, videoUrl } = req.body;
+    console.log("incoming course data:",req.body);
+    const { title, categoryId, 
+       levelNumber, description, 
+       price, duration, gradeRangeMin, gradeRangeMax,
+        status, order, featured } = req.body
+       const CourseThumbnail = req.file
+       
 
         // ensure all required fields are provided)
+
+        // if (!categoryId || !mongoose.Types.ObjectId.isValid(categoryId)) {
+        // return res.status(400).json({ message: "Invalid category ID" });}
+        const missingFields = [];
+        if (!title)missingFields.push("title");
+        if (!categoryId)missingFields.push("categoryId");
+        if (!levelNumber)missingFields.push("levelNumber");
+        if (!description)missingFields.push("description");
+        if (!duration)missingFields.push("duration");
+        if (!gradeRangeMax)missingFields.push("grade range max");
+        if (!gradeRangeMin)missingFields.push("grade range min");
+        if (!price)missingFields.push("price");
+        if (!CourseThumbnail)missingFields.push("CourseThumbnail");
     if (
-      !title ||
-      !categoryId ||
-      !levelNumber ||
-      !description ||
-      !Array.isArray(programHighlights) || !programHighlights.length ||
-      !thumbnail ||
-      !duration ||
-      gradeRangeMin == undefined ||
-      gradeRangeMax == undefined ||
-      !price ||
-      !videoUrl
-    ) {
-      return res.status(400).json({ message: "Missing required fields" });
+      
+      // !Array.isArray(programHighlights) || !programHighlights.length ||
+      missingFields.length>0
+      //!videoUrl
+     ){
+      return res.status(400).json({ message: "Missing required fields", missingFields });
     }
+
+   
+
 
     const newCourse = new Course({
       title,
       categoryId,
       levelNumber,
       description,
-      programHighlights,
-      thumbnail,
-      duration,
-      gradeRange: {
-        min: gradeRangeMin,
-        max: gradeRangeMax,
-      },
+      
+       CourseThumbnail,
+       duration,
+       gradeRange: {
+         min: gradeRangeMin,
+         max: gradeRangeMax,
+       },
       price,
       status,
       order,
       featured,
-      quiz,
-      videoUrl
-    });
+     
+    }); 
+     const thumbnailUpload = await cloudinary.uploader.upload(CourseThumbnail.path);
+     newCourse.CourseThumbnail = thumbnailUpload.secure_url;
 
   
     const savedCourse = await newCourse.save();
-    res.status(201).json({
+     console.log(`Course created: ${savedCourse.title} by admin ${req.user.id}`);
+     res.status(201).json({
       success: true,
       message: "Course created successfully",
-      course: savedCourse
+      course: savedCourse 
     });
   } catch (err) {
     console.error("Error creating course:", err);
@@ -56,15 +73,20 @@ export const createCourse = async (req, res) => {
   }
 };
 
-export const getCourseBySlug = async (req, res) => {
+export const getAllCourses = async (req, res) => {
   try {
-    const course = await Course.findOne({ slug: req.params.slug });
-    if (!course) return res.status(404).json({ message: "Course not found" });
-    res.json(course);
-  } catch (err) {
-    res.status(500).json({ message: "Server error" });
+    const courses = await Course.find({});
+    res.status(200).json({
+      success: true,
+      courses
+    });
+  } catch (error) {
+    console.error("Error fetching courses:", error);
+    res.status(500).json({ message: "Failed to fetch courses" });
   }
 };
+
+
 
 // export const seedCourses = async (req, res) => {
 //   try {

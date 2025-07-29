@@ -12,13 +12,13 @@ const AddCourses = () => {
     description: "",
     categoryId: "",        // Replace with category _id (dropdown preferred)
     levelNumber: 1,
-    duration: "",
-    gradeRangeMin: "",
-    gradeRangeMax: "",
-    price: "",
-    status: "draft",       // Options: active, inactive, draft
-    thumbnail: "",
-    videoUrl: "",
+     duration: "",
+     gradeRangeMin: "",
+     gradeRangeMax: "",
+     price: "",
+    // status: "draft",       // Options: active, inactive, draft
+     CourseThumbnail: "",
+    // videoUrl: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -42,18 +42,18 @@ const AddCourses = () => {
     const coursePayload = {
       title: formData.title,
       description: formData.description,
-      programHighlights: formData.programHighlights.split(',').map(s => s.trim()),
+      //programHighlights: formData.programHighlights.split(',').map(s => s.trim()),
       categoryId: formData.categoryId,
       levelNumber: Number(formData.levelNumber),
       duration: Number(formData.duration),
       gradeRange: {
-        min: Number(formData.gradeRangeMin),
-        max: Number(formData.gradeRangeMax),
+       min: Number(formData.gradeRangeMin),
+       max: Number(formData.gradeRangeMax),
       },
       price: Number(formData.price),
-      thumbnail: formData.thumbnail,
-      videoUrl: formData.videoUrl,
-      status: formData.status,
+      CourseThumbnail: formData.CourseThumbnail,
+      //videoUrl: formData.videoUrl,
+      //status: formData.status,
     };
 
     try {
@@ -62,17 +62,17 @@ const AddCourses = () => {
       setFormData({
         title: "",
         description: "",
-        categoryId: "",
-        levelNumber: 1,
-        duration: "",
-        gradeRangeMin: "",
-        gradeRangeMax: "",
-        price: "",
-        thumbnail: "",
-        videoUrl: "",
-        status: "draft",
+         categoryId: "",
+         levelNumber: 1,
+         duration: "",
+         gradeRangeMin: "",
+         gradeRangeMax: "",
+         price: "",
+         CourseThumbnail: "",
+        // videoUrl: "",
+        // status: "draft",
       });
-      setTimeout(() => navigate("/admin/dashboard"), 2000);
+      setTimeout(() => navigate("/admin-dash"), 2000);
     } catch (error) {
       setErrorMsg(error.response?.data?.message || "Failed to create course.");
     } finally {
@@ -85,10 +85,10 @@ const AddCourses = () => {
       <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">Add New Course</h1>
 
       {errorMsg && <p className="text-red-500 mb-4 text-center">{errorMsg}</p>}
-      {successMsg && <p className="text-green-500 mb-4 text-center">{successMsg}</p>}
+        {successMsg && <p className="text-green-500 mb-4 text-center">{successMsg}</p>}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
+         <form onSubmit={handleSubmit} className="space-y-4">
+         <div>
           <label className="block font-medium mb-1">Title</label>
           <input
             name="title"
@@ -97,9 +97,9 @@ const AddCourses = () => {
             required
             className="w-full border px-3 py-2 rounded"
           />
-        </div>
+         </div>
 
-        <div>
+         <div>
           <label className="block font-medium mb-1">Description</label>
           <textarea
             name="description"
@@ -109,8 +109,8 @@ const AddCourses = () => {
             required
             className="w-full border px-3 py-2 rounded"
           />
-        </div>
-        <div>
+         </div>
+         {/* <div>
           <label className="block font-medium mb-1">Program Highlights</label>
           <input
             name="programHighlights"
@@ -120,9 +120,9 @@ const AddCourses = () => {
             className="w-full border px-3 py-2 rounded"
             placeholder="e.g. Highlight 1, Highlight 2"
           />
-        </div>
+         </div> */}
 
-        <div className="grid grid-cols-2 gap-4">
+         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block font-medium mb-1">Category ID</label>
             <input
@@ -135,7 +135,7 @@ const AddCourses = () => {
             />
           </div>
 
-          <div>
+           <div>
             <label className="block font-medium mb-1">Level Number</label>
             <input
               type="number"
@@ -148,9 +148,9 @@ const AddCourses = () => {
               className="w-full border px-3 py-2 rounded"
             />
           </div>
-        </div>
+         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block font-medium mb-1">Duration (hours)</label>
             <input
@@ -173,9 +173,9 @@ const AddCourses = () => {
               className="w-full border px-3 py-2 rounded"
             />
           </div>
-        </div>
+         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block font-medium mb-1">Grade Range Min</label>
             <input
@@ -197,22 +197,25 @@ const AddCourses = () => {
               required
               className="w-full border px-3 py-2 rounded"
             />
-          </div>
-        </div>
+          </div> 
+         </div>
 
-        <div>
-          <label className="block font-medium mb-1">Thumbnail URL</label>
+        <div
+           className="block font-medium mb-1">Thumbnail Image
           <input
-            name="thumbnail"
-            value={formData.thumbnail}
-            onChange={handleChange}
-            required
-            placeholder="e.g. https://..."
-            className="w-full border px-3 py-2 rounded"
+            type="file"
+            accept="image/*"
+            onChange={(e) => setFormData({ ...formData, CourseThumbnail: e.target.files[0] })}
+            
+            name="CourseThumbnail"
+           required
           />
+          <label htmlFor="CourseThumbnail-upload" className="cursor-ponter text blue-600 hover:underline">
+            Click to upload or drag and drop
+          </label>
         </div>
 
-        <div>
+        {/* <div>
           <label className="block font-medium mb-1">YouTube Video URL</label>
           <input
             name="videoUrl"
@@ -221,9 +224,9 @@ const AddCourses = () => {
             placeholder="e.g. https://youtube.com/embed/abc123"
             className="w-full border px-3 py-2 rounded"
           />
-        </div>
+        </div> */}
 
-        <div>
+         <div>
           <label className="block font-medium mb-1">Status</label>
           <select
             name="status"
@@ -234,8 +237,8 @@ const AddCourses = () => {
             <option value="draft">Draft</option>
             <option value="active">Active</option>
             <option value="inactive">Inactive</option>
-          </select>
-        </div>
+          </select> 
+         </div> 
 
         <button
           type="submit"

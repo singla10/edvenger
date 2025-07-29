@@ -6,19 +6,20 @@ import { useNavigate } from "react-router-dom";
 
 const AdminLogin = () => {
   const { loginAdmin } = useAdmin();
-  const [username, setUsername] = useState("");
+  const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const success = await loginAdmin(username, password);
-    if (!success) {
-      setError("Invalid credentials");
+    const result = await loginAdmin(email, password);
+    if (!result.success) {
+      setError(result.message || "Invalid credentials");
     } else {
       setError("");
       alert("Logged in as Admin!");
+      navigate('/admin-dash');
     }
   };
 
@@ -32,10 +33,10 @@ const AdminLogin = () => {
         {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
         <input
           type="text"
-          placeholder="Username"
+          placeholder="email"
           className="w-full border p-2 mb-4"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={email}
+          onChange={(e) => setemail(e.target.value)}
         />
         <input
           type="password"
@@ -47,7 +48,6 @@ const AdminLogin = () => {
         <button
           type="submit"
           className="w-full bg-black text-white py-2 rounded hover:bg-gray-800"
-            onClick={() => navigate('/admin-dash')}
         >
           Login
         </button>
