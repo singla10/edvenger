@@ -3,11 +3,29 @@ import mongoose from "mongoose";
 
 const lectureSchema = new mongoose.Schema({
   lectureId: {type:String, required:true},
+  lectureTitle : {type:String, 
+    required: true
+  },
+  lectureDuration: {
+    type:Number,
+    required: true  },
+  lectureUrl: {
+    type: String,
+    required: true
+  },
+  isPreviewFree: {
+    type: Boolean,
+    required: true
+  },
+  lectureOrder: {
+    type: Number,
+    required: true
+  }
 },{_id:false})
 
 const chapterSchema = new mongoose.Schema({
   chapterId: {type:String, required:true},
-  cahpterOrder: {type:Number, required:true},
+  chapterOrder: {type:Number, required:true},
   ChapterTitle: { type:String, required:true},
   chapterContent : [lectureSchema]
 
@@ -25,8 +43,7 @@ const CourseSchema = new mongoose.Schema({
    description: { type: String, required: true },
   // programHighlights: [{ type: String, required: true }],
    CourseThumbnail: { type: String, required: true },
-  // videoUrl: { type: String, 
-  //   required: true },
+   CourseContent : [chapterSchema],
    duration: { type: Number, required: true },
     gradeRange: {
      min: { type: Number, required: true },

@@ -51,13 +51,24 @@ export const ShopContextProvider = ({ children }) => {
 
   // ✅ Fetch courses for students
   const fetchCourses = async () => {
-    try {
-      const res = await axios.get(`${BASE_URL}/courses/all`);
-      setCourses(res.data.courses  || []);
-    } catch (err) {
-      console.error("Failed to load courses:", err.response?.data?.message);
+  try {
+    const res = await axios.get(`${BASE_URL}/courses/all`);
+    console.log("✅ Courses fetched (ShopContext):", res.data);
+
+    // The response structure is { success: true, courses: [...] }
+    if (res.data && res.data.success) {
+      setCourses(res.data.courses);
+      return res.data.courses;
+    } else {
+      setCourses([]);
+      return [];
     }
-  };
+  } catch (err) {
+    console.error("Failed to load courses:", err.response?.data?.message);
+    setCourses([]);
+    return [];
+  }
+};
 
 
   return (

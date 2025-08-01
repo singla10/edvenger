@@ -81,6 +81,61 @@ export const AdminProvider = ({ children }) => {
     }
   };
 
+  // Add Chapter
+  const addChapter = async (courseId, chapterData) => {
+    try {
+      const token = localStorage.getItem("token");
+      console.log("Sending chapter data:", chapterData);
+      const res = await axios.post(`${Admin_Base_URL}/courses/${courseId}/add-chapter`, chapterData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      console.log("chapter added:", res.data);
+      return res.data;
+    } catch (err) {
+      console.error("Error adding chapter:", err.response?.data?.message);
+      throw err;
+    }
+  };
+
+   //  Add Lecture (with video upload)
+  const addLecture = async (courseId, chapterId, lectureData) => {
+    try {
+      const token = localStorage.getItem("token");
+      const formData = new FormData();
+
+        formData.append("lectureTitle", lectureData.lectureTitle);
+    formData.append("lectureOrder", lectureData.lectureOrder);
+    formData.append("lectureDuration", lectureData.lectureDuration);
+    formData.append("isPreviewFree", lectureData.isPreviewFree);
+    formData.append("lectureUrl", lectureData.lectureUrl); // file upload
+
+    console.log("📤 Sending lecture data:", formData);
+
+
+      for (const key in lectureData) {
+        formData.append(key, lectureData[key]);
+      }
+
+      const res = await axios.post(
+        `${Admin_Base_URL}/courses/${courseId}/add-lecture/${chapterId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log("Lecture added:", res.data);
+      return res.data;
+    } catch (err) {
+      console.error("Error adding lecture:", err.response?.data?.message);
+      throw err;
+    }
+  };
+
   const getAllCourses = async () => {
   try {
     const token = localStorage.getItem("token");
@@ -90,7 +145,7 @@ export const AdminProvider = ({ children }) => {
     }
   });
     console.log("✅ Full course data from backend:", res.data);
-    return res.data;
+    return res.data.courses || [];
   } catch (err) {
     console.error("❌ Failed to fetch courses:", err.response?.data?.message);
     throw err;
@@ -101,8 +156,11 @@ export const AdminProvider = ({ children }) => {
 
 
 
+
+
   return (
-    <AdminContext.Provider value={{ isAdminLoggedIn, loginAdmin, logoutAdmin, createCourse, getAllCourses, }}>
+    <AdminContext.Provider value={{ isAdminLoggedIn, loginAdmin, logoutAdmin,
+     createCourse, getAllCourses, addChapter,addLecture }}>
       {children}
     </AdminContext.Provider>
   );

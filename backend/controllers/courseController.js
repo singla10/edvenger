@@ -1,6 +1,7 @@
 
 import Course from '../models/CourseModel.js';
 import { v2 as cloudinary} from 'cloudinary';
+import {v4 as uuidv4} from 'uuid';
 
 export const createCourse = async (req, res) => {
   try {
@@ -54,6 +55,7 @@ export const createCourse = async (req, res) => {
       status,
       order,
       featured,
+      CourseContent: []
      
     }); 
      const thumbnailUpload = await cloudinary.uploader.upload(CourseThumbnail.path);
@@ -87,95 +89,106 @@ export const getAllCourses = async (req, res) => {
 };
 
 
+// ✅ Fetch single course by ID
+export const getCourseById = async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id);
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+    res.status(200).json(course);
+  } catch (err) {
+    console.error("Error fetching course:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
 
-// export const seedCourses = async (req, res) => {
-//   try {
+//  Add a new chapter to a course
+export const addChapter = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const { chapterOrder, chapterTitle } = req.body;
 
-//     await Course.deleteMany({});
-//     const courses = [
-//       {
-//         title: "Coding",
-//         slug: "coding",
-//         description: "Learn programming fundamentals and build cool projects.",
-//         image: "https://cdn-icons-png.flaticon.com/512/2721/2721291.png",
-//         level: "Beginner",
-//         duration: "6 weeks"
-//       },
-//       {
-//         title: "Robotics",
-//         slug: "robotics",
-//         description: "Build robots and understand automation basics.",
-//         image: "https://cdn-icons-png.flaticon.com/512/9636/9636596.png",
-//         level: "Intermediate",
-//         duration: "8 weeks",
-//         quiz: [
-//     {
-//       question: "What does a sensor do in a robot?",
-//       options: ["Provide power", "Send signals", "Detect surroundings", "Move arms"],
-//       answer: "Detect surroundings"
-//     },
-//      {
-//       question: "Which component is used to control a robot?",
-//       options: ["Battery", "Microcontroller", "Wheels", "Motors"],
-//       answer: "Microcontroller"
-//     }
-//        ]
+    if (!chapterTitle || !chapterOrder) {
+      return res.status(400).json({ message: "Missing required fields for chapter" });
+    }
 
-//       },
-//       {
-//         title: "Mathematics",
-//         slug: "mathematics",
-//         description: "Fun ways to master numbers and logic.",
-//         image: "https://cdn-icons-png.flaticon.com/512/1177/1177611.png",
-//         level: "Beginner",
-//         duration: "4 weeks"
-//       },
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
 
-//       {
-//         title: "Artificial Intelligence",
-//         slug: "AI",
-//         description: "Fun ways to master numbers and logic.",
-//         image: "https://cdn-icons-png.flaticon.com/512/4712/4712107.png",
-//         level: "Beginner",
-//         duration: "4 weeks"
-//       },
-      
-//       {
-//         title: "3D Modelling",
-//         slug: "3d-modelling",
-//         description: "Design cool 3D models for STEM projects.",
-//         image: "https://cdn-icons-png.flaticon.com/512/1605/1605350.png",
-//         level: "Intermediate",
-//         duration: "5 weeks"
-//       },
+    const newChapter = {
+      chapterId: uuidv4(),
+      chapterOrder: chapterOrder,
+      ChapterTitle: chapterTitle,
+      chapterContent: []
+    };
 
-//             {
-//         title: "Arduino / Electronics",
-//         slug: "arduino-electronics",
-//         description: "Build electronic circuits using Arduino boards.",
-//         image: "https://cdn-icons-png.flaticon.com/512/4140/4140047.png",
-//         level: "Intermediate",
-//         duration: "6 weeks"
-//       }
+    course.CourseContent.push(newChapter);
+    await course.save();
 
-//     ];
+    return res.status(201).json({
+      success: true,
+      message: "Chapter added successfully",
+      course
+    });
+  } catch (error) {
+    console.error("Error adding chapter:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
 
-//     await Course.insertMany(courses);
-//     res.json({ message: 'Courses seeded successfully!' });
-//   } catch (err) {
-//     res.status(500).json({ message: 'Error seeding courses', error: err.message });
-//   }
-// };
+//  Add a new lecture to a chapter
+export const addLecture = async (req, res) => {
+  try {
+    const { courseId, chapterId } = req.params;
+    const { lectureTitle, lectureDuration, isPreviewFree, lectureOrder } = req.body;
+    const lectureFile = req.file; //video file comes from frontend via multipart
 
-// export const getCourseQuiz = async (req, res) => {
-//   try {
-//     const course = await Course.findOne({ slug: req.params.slug });
-//     if (!course || !course.quiz) return res.status(404).json({ message: "Quiz not found" });
-//     res.json(course.quiz);
-//   } catch (err) {
-//     res.status(500).json({ message: "Server error" });
-//   }
-// };
+    if (!lectureTitle || !lectureDuration || !lectureFile || isPreviewFree === undefined || !lectureOrder) {
+      return res.status(400).json({ message: "Missing required fields for lecture" });
+    }
+     
+    // Fond course
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+    
+    //find chapter
+    const chapter = course.CourseContent.find(chap => chap.chapterId === chapterId);
+    if (!chapter) {
+      return res.status(404).json({ message: "Chapter not found" });
+    }
+
+    const uploadVideo = await cloudinary.uploader.upload(lectureFile.path, {
+      resource_type: "video", //imp. fr videos
+      folder: "course_lectures"
+    });
+
+    const newLecture = {
+      lectureId: uuidv4(),
+      lectureTitle,
+      lectureDuration,
+      lectureUrl: uploadVideo.secure_url, //save cloudinary video url
+      isPreviewFree,
+      lectureOrder
+    };
+
+    chapter.chapterContent.push(newLecture);
+    await course.save();
+
+    return res.status(201).json({
+      success: true,
+      message: "Lecture added successfully",
+      course
+    });
+  } catch (error) {
+    console.error("Error adding lecture:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
 
 
 

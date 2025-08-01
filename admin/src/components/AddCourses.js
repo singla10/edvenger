@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useAdmin } from "../context/AdminContext";
 import { useNavigate } from "react-router-dom";
+import AddChapterLecture from "./AddChapter";
 
 const AddCourses = () => {
   const { createCourse } = useAdmin();
@@ -248,6 +249,9 @@ const AddCourses = () => {
           {loading ? "Submitting..." : "Create Course"}
         </button>
       </form>
+      <div>
+        <AddChapterLecture/>
+      </div>
     </div>
   );
 };

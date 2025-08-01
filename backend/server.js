@@ -13,6 +13,7 @@ import protectedRoutes from './routes/protectedRoutes.js';
 // 2️⃣  Bring in our database helper from step 1-a.
 import connectDB from './config/db.js';
 
+
 // const upload = multer({ storage });
 // export default upload;
 
@@ -36,6 +37,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 
 app.use("/api/courses", courseRoutes);
+
 
 
 

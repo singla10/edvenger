@@ -1,12 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import CourseCard from '../components/CourseCard';
-import programming from '../assets/programming.png';
-import Robot from '../assets/robot.png';
-import Math from '../assets/mathematics.png';
-import AI from '../assets/artificial-intelligence.png';
-import Model from '../assets/model.png';
-import Board from '../assets/motherboard.png';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 // import "../Styles/Home.css";
@@ -99,20 +92,7 @@ const Home = () => {
         <NeuroShowcase />
       </div>
 
-      <section
-      ref={categoriesRef}
-      className={`fade-in ${categoriesVisible ? 'visible' : ''} bg-gray-50 px-6 md:px-16 py-16`}
-      >
-     <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Our Course Categories</h2>
-     <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-     <CourseCard title="Coding" icon={programming} link="coding" />
-     <CourseCard title="Robotics" icon={Robot} link="robotics" />
-     <CourseCard title="Mathematics" icon={Math} link="mathematics" />
-     <CourseCard title="Artificial Intelligence" icon={AI} link="AI" />
-     <CourseCard title="3D Modelling" icon={Model} link="3d-modelling" />
-     <CourseCard title="Ardunio/ Electronics" icon={Board} link="ardunio-electronics" />
-     </div>
-     </section>
+     
 
      <section
      className="bg-gray-50 px-6 md:px-16 py-16"

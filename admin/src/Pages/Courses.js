@@ -15,7 +15,7 @@ const Courses = () => {
       try {
         const data = await getAllCourses();
         console.log("✅ Courses fetched from backend:", data);
-        setCourses(data || []); // fallback to empty array
+        setCourses(Array.isArray(data)? data: []); // fallback to empty array
       } catch (err) {
         console.error("❌ Failed to fetch courses from backend:", err);
         setCourses([]); // ensure fallback

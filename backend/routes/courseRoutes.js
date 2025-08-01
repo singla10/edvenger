@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import { createCourse, getAllCourses} from "../controllers/courseController.js";
+import { addChapter, addLecture, createCourse, getAllCourses, getCourseById} from "../controllers/courseController.js";
 import { authorizeRoles, protect} from "../middleware/auth.js";
 import upload from '../middleware/multer.js'
 
@@ -9,14 +9,8 @@ const router = express.Router();
 
 router.post("/create", protect,  authorizeRoles('admin'),upload.single("CourseThumbnail"), createCourse);
 router.get( "/all", getAllCourses);
-//     try{
-//         const courses = await Courses.find().sort({ createdAt: -1 });
-//         res.status(200).json({ success: true, courses });
-//     } catch (error) {
-//         res.status(500).json({ success: false, message: "Server error" });
-//     }
-// });
-// router.get("/:slug", getCourseBySlug);
-//router.post("/add-curriculum/:slug", addCurriculumToCourse);
+router.get("/:id", getCourseById);
+router.post("/:courseId/add-chapter", protect, authorizeRoles('admin'), addChapter);
+router.post("/:courseId/add-lecture/:chapterId", protect, authorizeRoles('admin'), upload.single("lectureUrl"), addLecture);
 
 export default router;
