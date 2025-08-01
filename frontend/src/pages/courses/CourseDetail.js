@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useShop } from "../context/shopcontext";
+import { useShop } from "../../context/shopcontext";
 
 const CourseDetailPage = () => {
   const { courses, fetchCourses } = useShop();
