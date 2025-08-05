@@ -1,45 +1,49 @@
 // frontend/src/App.js
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import StudentDash from './pages/student/StudentDash';
-import CoursePage from './pages/courses/CoursePage.js';
-import {ShopContextProvider} from './context/shopcontext';
-import PrivacyPolicy from './pages/PrivacyPolicy';
-import TermsAndConditions from './pages/TermsAndCondition.js';
-import Profile from './pages/Profile.js';
-import CourseDetail from './pages/courses/CourseDetail.js';
+import StudentDash from "./pages/student/StudentDash";
+import Contact from "./pages/Contact.js";
+import Navbar from "./components/Navbar.js";
+import Footer from "./components/Footer.js";
+import About from "./pages/About.js";
+import { ShopContextProvider } from "./context/shopcontext";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsAndConditions from "./pages/TermsAndCondition.js";
+import Profile from "./pages/Profile.js";
 
+// Component to handle layout with navbar spacing
+const Layout = ({ children }) => {
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
 
+  return <div className={isHomePage ? "" : "pt-16"}>{children}</div>;
+};
 
 function App() {
   // 1️⃣  <BrowserRouter> listens for URL changes (Single-Page-App).
   return (
-    
     <BrowserRouter>
       <ShopContextProvider>
-      {/* 2️⃣  <Routes> chooses exactly one <Route> to render. */}
-      <Routes>
-        <Route path="/" element={<Home/>}/>
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/register" element={<Register/>}/>
-        <Route path="/courses" element={<CoursePage/>}/>
-        <Route path="/courses/:id" element={<CourseDetail/>}/>
-        <Route path="/policy" element={<PrivacyPolicy/>} />
-        <Route path="/terms" element={<TermsAndConditions/>}/>
-
-
-        {/* 3️⃣  Three isolated entry points – one per user role. */}
-        <Route path="/student/*" element={<StudentDash />} />
-        <Route path="/profile" element={<Profile />} />
-
-
-        
-      </Routes>
+        <Navbar />
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/policy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsAndConditions />} />
+            <Route path="/about" element={<About />} />
+            {/* 3️⃣  Three isolated entry points – one per user role. */}
+            <Route path="/student/*" element={<StudentDash />} />
+            <Route path="/profile" element={<Profile />} />
+          </Routes>
+        </Layout>
+        <Footer />
       </ShopContextProvider>
     </BrowserRouter>
-   
   );
 }
 
