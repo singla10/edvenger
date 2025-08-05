@@ -104,13 +104,8 @@ export const AdminProvider = ({ children }) => {
       const token = localStorage.getItem("token");
       const formData = new FormData();
 
-        formData.append("lectureTitle", lectureData.lectureTitle);
-    formData.append("lectureOrder", lectureData.lectureOrder);
-    formData.append("lectureDuration", lectureData.lectureDuration);
-    formData.append("isPreviewFree", lectureData.isPreviewFree);
-    formData.append("lectureUrl", lectureData.lectureUrl); // file upload
-
-    console.log("📤 Sending lecture data:", formData);
+        
+     console.log("📤 Sending lecture data:", formData);
 
 
       for (const key in lectureData) {
@@ -152,15 +147,22 @@ export const AdminProvider = ({ children }) => {
   }
 };
 
-
-
-
-
+ const getCourseContent = async (courseId) => {
+  try{
+    const res = await axios.get(`${Admin_Base_URL}/courses/${courseId}/content`);
+    console.log("Course content fetched:", res.data);
+    return res.data;
+  } catch (err){
+    console.error("Failed to fetch Course COntent:", err.response?.data?.message|| err.message);
+    throw err;
+  }
+ };
 
 
   return (
     <AdminContext.Provider value={{ isAdminLoggedIn, loginAdmin, logoutAdmin,
-     createCourse, getAllCourses, addChapter,addLecture }}>
+     createCourse, getAllCourses, addChapter,addLecture,
+     getCourseContent }}>
       {children}
     </AdminContext.Provider>
   );

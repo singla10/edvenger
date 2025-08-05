@@ -1,6 +1,8 @@
 import express from "express";
 import multer from "multer";
-import { addChapter, addLecture, createCourse, getAllCourses, getCourseById} from "../controllers/courseController.js";
+import { addChapter, addLecture, createCourse, getAllCourses, getCourseById,
+    getCourseContent
+} from "../controllers/courseController.js";
 import { authorizeRoles, protect} from "../middleware/auth.js";
 import upload from '../middleware/multer.js'
 
@@ -12,5 +14,6 @@ router.get( "/all", getAllCourses);
 router.get("/:id", getCourseById);
 router.post("/:courseId/add-chapter", protect, authorizeRoles('admin'), addChapter);
 router.post("/:courseId/add-lecture/:chapterId", protect, authorizeRoles('admin'), upload.single("lectureUrl"), addLecture);
+router.get("/:courseId/content", getCourseContent);
 
 export default router;

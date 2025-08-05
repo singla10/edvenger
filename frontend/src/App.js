@@ -4,12 +4,12 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import StudentDash from './pages/student/StudentDash';
-import CoursePage from './pages/CoursePage';
+import CoursePage from './pages/courses/CoursePage.js';
 import {ShopContextProvider} from './context/shopcontext';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsAndConditions from './pages/TermsAndCondition.js';
 import Profile from './pages/Profile.js';
-import CourseDetail from './pages/CourseDetail.js';
+import CourseDetail from './pages/courses/CourseDetail.js';
 
 
 

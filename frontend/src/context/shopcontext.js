@@ -70,9 +70,22 @@ export const ShopContextProvider = ({ children }) => {
   }
 };
 
+const getCourseContent = async (courseId) => {
+  try{
+    const res = await axios.get(`${BASE_URL}/courses/${courseId}/content`);
+    console.log("course content fetched:", res.data);
+    return res.data;
+  } catch (err){
+    console.log(" failed to fetch course conyent:", err.response?.data?.message || err.message);
+    throw err;
+  }
+};
+
 
   return (
-    <ShopContext.Provider value={{ registerUser, loginUser, currentUser, setCurrentUser,fetchCourses, courses }}>
+    <ShopContext.Provider value={{ registerUser, loginUser, currentUser, setCurrentUser,fetchCourses, courses,
+      getCourseContent
+     }}>
       {children}
     </ShopContext.Provider>
   );

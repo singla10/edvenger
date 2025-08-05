@@ -190,5 +190,31 @@ export const addLecture = async (req, res) => {
   }
 };
 
+// ✅ Get all chapters and lectures of a specific course
+export const getCourseContent = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    console.log("Fetching content for courseId:", courseId);
+
+    // Find course and fetch its content
+    const course = await Course.findById(courseId).select("title CourseContent");
+
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+
+    return res.status(200).json({
+      success: true,
+      courseId,
+      title: course.title,
+      chapters: course.CourseContent,
+    });
+  } catch (error) {
+    console.error("Error fetching course content:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+
 
 
