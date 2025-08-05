@@ -34,6 +34,10 @@ const CoursePages = () => {
     return matchesSearch && matchesCategory && matchesLevel && matchesPrice;
   });
 
+  const handleCourseClick = (courseId) => {
+    navigate(`/courses/${courseId}/content`);
+  }
+
   return (
     <div className="max-w-7xl mx-auto mt-10 p-6">
       <h2 className="text-3xl font-bold mb-6 text-center">🎓 Browse Our Courses</h2>
@@ -87,7 +91,7 @@ const CoursePages = () => {
           {filteredCourses.map((course) => (
             <div
               key={course._id}
-              onClick={() => navigate(`/courses/${course._id}`)}
+              onClick={() => handleCourseClick(course._id)}
               className="border rounded-lg p-4 shadow-md bg-white hover:shadow-lg transition duration-300 cursor-pointer"
             >
               <img

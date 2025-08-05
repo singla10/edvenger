@@ -6,6 +6,8 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes.js';
 import courseRoutes from "./routes/courseRoutes.js";
 import connectCloudinary from './config/cloudinary.js';
+import userProgressRoutes from './routes/progressRoutes.js'
+
 
 import protectedRoutes from './routes/protectedRoutes.js';
 
@@ -38,8 +40,7 @@ app.use('/api/auth', authRoutes);
 
 app.use("/api/courses", courseRoutes);
 
-
-
+app.use("/api/progress", userProgressRoutes);
 
 app.use('/api/protected', protectedRoutes);
 

@@ -10,6 +10,7 @@ const ShopContext = createContext();
 export const ShopContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [courses, setCourses] = useState([]);
+  const [progressData, setProgressData] = useState({});
 
   useEffect(() => {
   const storedUser = localStorage.getItem('user');
@@ -38,6 +39,10 @@ export const ShopContextProvider = ({ children }) => {
        console.log("🟢 Login success:", res.data);
 
       setCurrentUser(res.data); // Store user globally
+
+      if(res.data.token) {
+        localStorage.setItem('token', res.data.token);
+      }
       localStorage.setItem('user', JSON.stringify(res.data)); // Optional: persist in localStorage
 
       return { success: true };
@@ -81,10 +86,53 @@ const getCourseContent = async (courseId) => {
   }
 };
 
+  // ✅ Fetch course progress for a user
+  const fetchProgress = async (courseId, userId) => {
+    try {
+      const res = await axios.get(`${BASE_URL}/progress/${courseId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        params: { userId }, // in case we want to fetch for a specific user
+      });
+
+      console.log("✅ Progress fetched:", res.data);
+      setProgressData(res.data);
+      return res.data;
+    } catch (error) {
+      console.error("❌ Error fetching progress:", error.response?.data || error.message);
+      return null;
+    }
+  };
+
+  // ✅ Mark a lecture as completed
+  const completeLecture = async (courseId, chapterId, lectureId, userId) => {
+    try {
+      const res = await axios.post(
+        `${BASE_URL}/progress/complete-lecture`,
+        { courseId, chapterId, lectureId, userId },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      console.log("✅ Lecture marked as completed:", res.data);
+      // Refresh progress after marking completion
+      fetchProgress(courseId, userId);
+      return res.data;
+    } catch (error) {
+      console.error("❌ Error marking lecture complete:", error.response?.data || error.message);
+      return null;
+    }
+  };
+
 
   return (
     <ShopContext.Provider value={{ registerUser, loginUser, currentUser, setCurrentUser,fetchCourses, courses,
-      getCourseContent
+      getCourseContent, fetchProgress, completeLecture,
+      progressData,
      }}>
       {children}
     </ShopContext.Provider>

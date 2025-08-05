@@ -12,6 +12,8 @@ import { ShopContextProvider } from "./context/shopcontext";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsAndConditions from "./pages/TermsAndCondition.js";
 import Profile from "./pages/Profile.js";
+import CoursePages from "./pages/courses/CoursePage.js"
+import CourseContent from "./pages/courses/Coursecont.js";
 
 // Component to handle layout with navbar spacing
 const Layout = ({ children }) => {
@@ -39,6 +41,8 @@ function App() {
             {/* 3️⃣  Three isolated entry points – one per user role. */}
             <Route path="/student/*" element={<StudentDash />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/courses" element={<CoursePages/>} />
+            <Route path="/courses/:id/content" element={<CourseContent/>}/>
           </Routes>
         </Layout>
         <Footer />
