@@ -31,7 +31,10 @@ const app = express();
 
 // 6️⃣  Global middleware – let React (http://localhost:3000) call us
 //     without CORS errors *and* automatically parse JSON bodies.
-app.use(cors());
+app.use(cors({
+  origin: process.env.REACT_URL_CLIENT || "http://localhost:3001",
+  credentials: true
+}));
 app.use(express.json());
 
 //routes

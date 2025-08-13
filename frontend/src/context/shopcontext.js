@@ -11,7 +11,8 @@ export const ShopContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [courses, setCourses] = useState([]);
   const [progress, setProgress] = useState({});
-  const [socket, setSocket] = useState(null);
+  const [loadingProgress, setLoadingProgress] = useState(false);
+
   
 
   useEffect(() => {
@@ -20,7 +21,9 @@ export const ShopContextProvider = ({ children }) => {
       setCurrentUser(JSON.parse(storedUser));
     }
 
-  
+  //    if (token) {
+  //   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  // }
    
   }, []);
 
@@ -92,23 +95,47 @@ const getCourseContent = async (courseId) => {
   }
 };
 
- const fetchProgress = async (courseId) => {
-   
-  };
-
-  // ✅ Mark a lecture as complete & emit update
-  const markLectureComplete = async (courseId, lectureId) => {
-    
-  };
  
 
-   
+  // ✅ Mark a lecture as complete & emit update
+  const markLectureComplete = async (courseId, lectureId, watchedPercentage) => {
+    try {
+      const {data} = await axios.post(`${BASE_URL}/progress/mark-complete`,
+        { courseId, lectureId, watchedPercentage },
+        {withCredentials:true}
+      );
+      setProgress(data.progress);
+      return data;
+
+    } catch (error) {
+      console.error("Error marking lecture complete:", error);
+      throw error.response?.data?.message || "Failed to mark lecture complete";
+    }
+  };
+ 
+  // ✅ Fetch progress for a specific course
+  const fetchProgress = async (courseId) => {
+    try{
+      setLoadingProgress(true);
+      const {data} = await axios.get(`${BASE_URL}/progress/${courseId}`, {
+        withCredentials: true
+      });
+      setProgress(data);
+      return data;
+    } catch(error) {
+      console.error("Error fetching progress:", error);
+      setProgress({});
+      throw error;
+    } finally {
+      setLoadingProgress(false);
+    }
+  };
 
 
   return (
     <ShopContext.Provider value={{ registerUser, loginUser, currentUser, setCurrentUser,fetchCourses, courses,
       getCourseContent,
-      fetchProgress, progress, markLectureComplete, socket, setSocket
+      fetchProgress, progress, markLectureComplete, loadingProgress
      }}>
       {children}
     </ShopContext.Provider>

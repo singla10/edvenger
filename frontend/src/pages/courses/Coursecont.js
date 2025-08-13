@@ -26,9 +26,7 @@ const CourseContent = () => {
              if (user?._id) {
           await fetchProgress(courseId, user._id);
              }
-      } 
-      
-      
+      }
       catch (err) {
         console.error("❌ Error fetching content:", err);
       } finally {
@@ -37,20 +35,26 @@ const CourseContent = () => {
     };
 
     fetchContent();
-  }, [courseId, getCourseContent, fetchProgress]);
+  }, [courseId, getCourseContent]);
 
   const handleComplete = async (chapterId, lectureId) => {
-    setLoadingLecture(true);
     try {
-      if (user?._id) {
-        await completeLecture(courseId, chapterId, lectureId, user._id);
-      }
-    } catch (err) {
-      console.error("❌ Error completing lecture:", err);
+      setLoadingLecture(true);
+      await completeLecture(courseId, lectureId, 100); // mark as watched fully
+      await fetchProgress(courseId, user._id); // refresh progress after completion
+    } catch (error) {
+      console.error("Error marking lecture complete:", error);
     } finally {
       setLoadingLecture(false);
     }
   };
+
+   const isLectureCompleted = (lectureId) => {
+    return Array.isArray(progressData?.completedLectures) &&
+           progressData.completedLectures.includes(String(lectureId));
+  };
+
+ 
 
   if (loading) return <p>⏳ Loading course content...</p>;
 
@@ -95,14 +99,19 @@ const CourseContent = () => {
                         Your browser does not support the video tag.
                       </video>
 
-                                            <button
+                      {isLectureCompleted(lec.lectureId) ? (
+                        <span className="mt-2 inline-block text-green-600 font-semibold">
+                          completed
+                        </span>
+                        ):(
+                       <button
                         onClick={() => handleComplete(ch.chapterId, lec.lectureId)}
                         className="mt-2 px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700"
                         disabled={loadingLecture}
                       >
                         {loadingLecture ? "Marking..." : "✅ Mark Complete"}
                       </button>
-
+                      )}
                     </div>
                   ))}
                 </div>
