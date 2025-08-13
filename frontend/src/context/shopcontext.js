@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
-import { useEffect } from 'react';
+
 
 // ✅ BASE URL (no VITE)
 const BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api';
@@ -10,14 +10,20 @@ const ShopContext = createContext();
 export const ShopContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [courses, setCourses] = useState([]);
-  const [progressData, setProgressData] = useState({});
+  const [progress, setProgress] = useState({});
+  const [socket, setSocket] = useState(null);
+  
 
   useEffect(() => {
-  const storedUser = localStorage.getItem('user');
-  if (storedUser) {
-    setCurrentUser(JSON.parse(storedUser));
-  }
-}, []);
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setCurrentUser(JSON.parse(storedUser));
+    }
+
+  
+   
+  }, []);
+
 
   // ✅ Register API function
   const registerUser = async (userData) => {
@@ -86,53 +92,23 @@ const getCourseContent = async (courseId) => {
   }
 };
 
-  // ✅ Fetch course progress for a user
-  const fetchProgress = async (courseId, userId) => {
-    try {
-      const res = await axios.get(`${BASE_URL}/progress/${courseId}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        params: { userId }, // in case we want to fetch for a specific user
-      });
-
-      console.log("✅ Progress fetched:", res.data);
-      setProgressData(res.data);
-      return res.data;
-    } catch (error) {
-      console.error("❌ Error fetching progress:", error.response?.data || error.message);
-      return null;
-    }
+ const fetchProgress = async (courseId) => {
+   
   };
 
-  // ✅ Mark a lecture as completed
-  const completeLecture = async (courseId, chapterId, lectureId, userId) => {
-    try {
-      const res = await axios.post(
-        `${BASE_URL}/progress/complete-lecture`,
-        { courseId, chapterId, lectureId, userId },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-
-      console.log("✅ Lecture marked as completed:", res.data);
-      // Refresh progress after marking completion
-      fetchProgress(courseId, userId);
-      return res.data;
-    } catch (error) {
-      console.error("❌ Error marking lecture complete:", error.response?.data || error.message);
-      return null;
-    }
+  // ✅ Mark a lecture as complete & emit update
+  const markLectureComplete = async (courseId, lectureId) => {
+    
   };
+ 
+
+   
 
 
   return (
     <ShopContext.Provider value={{ registerUser, loginUser, currentUser, setCurrentUser,fetchCourses, courses,
-      getCourseContent, fetchProgress, completeLecture,
-      progressData,
+      getCourseContent,
+      fetchProgress, progress, markLectureComplete, socket, setSocket
      }}>
       {children}
     </ShopContext.Provider>

@@ -1,6 +1,8 @@
 // backend/server.js
 // 1️⃣  Pull in the libraries our server depends on.
 import express from 'express';
+// import http from 'http';
+// import { Server } from 'socket.io';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes.js';
@@ -16,15 +18,12 @@ import protectedRoutes from './routes/protectedRoutes.js';
 import connectDB from './config/db.js';
 
 
-// const upload = multer({ storage });
-// export default upload;
 
 // 3️⃣  Read environment variables from .env into process.env.
 dotenv.config();
 
 // 4️⃣  Connect to MongoDB before we start accepting HTTP requests.
 connectDB();
-
  connectCloudinary(); 
 
 // 5️⃣  Create an Express application instance.
@@ -34,23 +33,33 @@ const app = express();
 //     without CORS errors *and* automatically parse JSON bodies.
 app.use(cors());
 app.use(express.json());
-// app.use("/uploads", express.static("uploads")); 
 
+//routes
 app.use('/api/auth', authRoutes);
-
 app.use("/api/courses", courseRoutes);
-
 app.use("/api/progress", userProgressRoutes);
-
 app.use('/api/protected', protectedRoutes);
 
-
-
-// 7️⃣  Basic test route so you can confirm the server responds.
-//     Later you’ll mount /api/admin, /api/teacher, /api/student, etc.
 app.get('/', (req, res) => {
   res.send('API is running ✅');
 });
+
+// const server = http.createServer(app);
+// const io = new Server(server, {
+//   cors: {
+//     origin: process.env.REACT_URL_CLIENT || "http://localhost:3000",
+//     methods: ["GET", "POST"],
+//     credentials: true
+//   }
+// });
+
+// io.on("connection", (socket) => {
+//   console.log("New client connected");
+
+//   socket.on("disconnect", () => {
+//     console.log("Client disconnected");
+//   });
+// });
 
 // 8️⃣  Pick port from environment (for Heroku) or default to 5000.
 const PORT = process.env.PORT || 5000;

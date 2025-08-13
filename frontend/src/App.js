@@ -14,6 +14,7 @@ import TermsAndConditions from "./pages/TermsAndCondition.js";
 import Profile from "./pages/Profile.js";
 import CoursePages from "./pages/courses/CoursePage.js"
 import CourseContent from "./pages/courses/Coursecont.js";
+import CourseDetailPage from "./pages/courses/CourseDetail.js";
 
 // Component to handle layout with navbar spacing
 const Layout = ({ children }) => {
@@ -43,6 +44,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/courses" element={<CoursePages/>} />
             <Route path="/courses/:id/content" element={<CourseContent/>}/>
+            <Route path="/courses/:id/detail"  element={<CourseDetailPage/>}/>
           </Routes>
         </Layout>
         <Footer />

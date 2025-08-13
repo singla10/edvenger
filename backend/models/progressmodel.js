@@ -1,29 +1,16 @@
+// models/Progress.js
 import mongoose from "mongoose";
 
-const userProgressSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true
-  },
-  courseId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Course",
-    required: true
-  },
-  completedLectures: [
-    {
-      lectureId: { type: String, required: true },
-      completedAt: { type: Date, default: Date.now }
-    }
-  ],
-  lastAccessedLecture: { type: String }, // to resume last watched
-  overallProgress: { type: Number, default: 0 }, // percentage
-  startedAt: { type: Date, default: Date.now },
-  completedAt: { type: Date }
+const progressSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  courseId: { type: mongoose.Schema.Types.ObjectId, ref: "Course", required: true },
+  completedLectures: [{ type: String }], // Store lecture IDs as strings
+  // completedLectures: [{ type: mongoose.Schema.Types.ObjectId, ref: "Lecture" }],
+  totalLectures: { type: Number, default: 0 },
+  percentage: { type: Number, default: 0 },
+  lastUpdated: { type: Date, default: Date.now }
 }, { timestamps: true });
 
-// Ensure one record per user+course
-userProgressSchema.index({ userId: 1, courseId: 1 }, { unique: true });
+progressSchema.index({ userId: 1, courseId: 1 }, { unique: true }); // Prevent duplicates
 
-export default mongoose.model("UserProgress", userProgressSchema);
+export default mongoose.model("Progress", progressSchema);
