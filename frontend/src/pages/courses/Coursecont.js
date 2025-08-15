@@ -1,4 +1,4 @@
-// frontend/src/components/CourseContent.js
+
 import { useEffect, useState } from "react";
 import { useShop } from "../../context/shopcontext";
 import { useParams } from "react-router-dom";
@@ -37,22 +37,22 @@ const CourseContent = () => {
     fetchContent();
   }, [courseId, getCourseContent]);
 
-  const handleComplete = async (chapterId, lectureId) => {
-    try {
-      setLoadingLecture(true);
-      await completeLecture(courseId, lectureId, 100); // mark as watched fully
-      await fetchProgress(courseId, user._id); // refresh progress after completion
-    } catch (error) {
-      console.error("Error marking lecture complete:", error);
-    } finally {
-      setLoadingLecture(false);
-    }
-  };
+  // const handleComplete = async (chapterId, lectureId) => {
+  //   try {
+  //     setLoadingLecture(true);
+  //     await completeLecture(courseId, lectureId, 100); // mark as watched fully
+  //     await fetchProgress(courseId, user._id); // refresh progress after completion
+  //   } catch (error) {
+  //     console.error("Error marking lecture complete:", error);
+  //   } finally {
+  //     setLoadingLecture(false);
+  //   }
+  // };
 
-   const isLectureCompleted = (lectureId) => {
-    return Array.isArray(progressData?.completedLectures) &&
-           progressData.completedLectures.includes(String(lectureId));
-  };
+  //  const isLectureCompleted = (lectureId) => {
+  //   return Array.isArray(progressData?.completedLectures) &&
+  //          progressData.completedLectures.includes(String(lectureId));
+  // };
 
  
 
@@ -62,7 +62,7 @@ const CourseContent = () => {
     <div className="max-w-4xl mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4">📘 Course Content</h2>
 
-      {/* ✅ Progress Bar */}
+      {/* ✅ Progress Bar
       <div className="w-full bg-gray-200 rounded-full h-4 mb-6">
         <div
           className="bg-green-500 h-4 rounded-full transition-all duration-500"
@@ -71,7 +71,7 @@ const CourseContent = () => {
       </div>
       <p className="text-sm text-gray-600 mb-4">
         Completion: <strong>{progressData?.percentage || 0}%</strong>
-      </p>
+      </p> */}
 
 
       {content && content.chapters && content.chapters.length > 0 ? (
@@ -99,19 +99,20 @@ const CourseContent = () => {
                         Your browser does not support the video tag.
                       </video>
 
-                      {isLectureCompleted(lec.lectureId) ? (
+                      {/* {isLectureCompleted(lec.lectureId) ? ( */}
                         <span className="mt-2 inline-block text-green-600 font-semibold">
                           completed
                         </span>
-                        ):(
-                       <button
+                        {/* ):( */}
+                       {/* <button
                         onClick={() => handleComplete(ch.chapterId, lec.lectureId)}
                         className="mt-2 px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700"
                         disabled={loadingLecture}
                       >
                         {loadingLecture ? "Marking..." : "✅ Mark Complete"}
-                      </button>
-                      )}
+                      </button> */}
+                      {/* )} */}
+                      
                     </div>
                   ))}
                 </div>

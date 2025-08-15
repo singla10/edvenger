@@ -19,8 +19,8 @@ const Footer = () => {
     <footer className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white relative overflow-hidden">
       {/* Decorative background elements */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-10 left-10 w-32 h-32 bg-blue-500 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-10 right-10 w-40 h-40 bg-purple-500 rounded-full blur-3xl"></div>
+        <div className="absolute top-10 left-10 w-32 h-32 bg-teal-500 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-10 right-10 w-40 h-40 bg-emerald-500 rounded-full blur-3xl"></div>
       </div>
 
       <div className="relative z-10 pt-16 pb-8 px-6 lg:px-8">
@@ -31,7 +31,7 @@ const Footer = () => {
             <div className="lg:col-span-1 space-y-6">
               <div>
                 <h2 className="text-3xl lg:text-4xl font-bold mb-3">
-                  <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-teal-400 to-emerald-400 bg-clip-text text-transparent">
                     Stem
                   </span>
                   <span className="text-white">Elix</span>
@@ -58,7 +58,7 @@ const Footer = () => {
                       key={label}
                       href={href}
                       aria-label={label}
-                      className="group bg-slate-700/50 hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 p-3 rounded-xl transition-all duration-300 transform hover:scale-110 hover:shadow-lg"
+                      className="group bg-slate-700/50 hover:bg-gradient-to-r hover:from-teal-600 hover:to-emerald-600 p-3 rounded-xl transition-all duration-300 transform hover:scale-110 hover:shadow-lg"
                     >
                       <Icon className="text-lg group-hover:text-white transition-colors duration-300" />
                     </a>
@@ -69,7 +69,7 @@ const Footer = () => {
 
             {/* Explore Section */}
             <div className="space-y-6">
-              <h3 className="text-xl font-bold text-white border-b-2 border-blue-500 pb-2 inline-block">
+              <h3 className="text-xl font-bold text-white border-b-2 border-teal-500 pb-2 inline-block">
                 Explore
               </h3>
               <ul className="space-y-3">
@@ -84,9 +84,9 @@ const Footer = () => {
                   <li key={item}>
                     <a
                       href="#"
-                      className="text-slate-300 hover:text-blue-400 transition-colors duration-300 text-base flex items-center group"
+                      className="text-slate-300 hover:text-teal-400 transition-colors duration-300 text-base flex items-center group"
                     >
-                      <span className="w-2 h-2 bg-blue-500 rounded-full mr-3 group-hover:scale-125 transition-transform duration-300"></span>
+                      <span className="w-2 h-2 bg-teal-500 rounded-full mr-3 group-hover:scale-125 transition-transform duration-300"></span>
                       {item}
                     </a>
                   </li>
@@ -96,7 +96,7 @@ const Footer = () => {
 
             {/* Quick Links Section */}
             <div className="space-y-6">
-              <h3 className="text-xl font-bold text-white border-b-2 border-purple-500 pb-2 inline-block">
+              <h3 className="text-xl font-bold text-white border-b-2 border-emerald-500 pb-2 inline-block">
                 Quick Links
               </h3>
               <ul className="space-y-3">
@@ -109,9 +109,9 @@ const Footer = () => {
                   <li key={to}>
                     <Link
                       to={to}
-                      className="text-slate-300 hover:text-purple-400 transition-colors duration-300 text-base flex items-center group"
+                      className="text-slate-300 hover:text-emerald-400 transition-colors duration-300 text-base flex items-center group"
                     >
-                      <span className="w-2 h-2 bg-purple-500 rounded-full mr-3 group-hover:scale-125 transition-transform duration-300"></span>
+                      <span className="w-2 h-2 bg-emerald-500 rounded-full mr-3 group-hover:scale-125 transition-transform duration-300"></span>
                       {text}
                     </Link>
                   </li>
@@ -121,28 +121,28 @@ const Footer = () => {
 
             {/* Contact Info Section */}
             <div className="space-y-6">
-              <h3 className="text-xl font-bold text-white border-b-2 border-green-500 pb-2 inline-block">
+              <h3 className="text-xl font-bold text-white border-b-2 border-emerald-500 pb-2 inline-block">
                 Get In Touch
               </h3>
               <ul className="space-y-4">
-                <li className="flex items-start gap-3 text-slate-300 group hover:text-green-400 transition-colors duration-300">
-                  <FaMapMarkerAlt className="text-green-500 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
+                <li className="flex items-start gap-3 text-slate-300 group hover:text-emerald-400 transition-colors duration-300">
+                  <FaMapMarkerAlt className="text-emerald-500 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
                   <span className="text-base leading-relaxed">
                     123 STEM Innovation Hub
                     <br />
                     Tech City, India 110001
                   </span>
                 </li>
-                <li className="flex items-center gap-3 text-slate-300 group hover:text-green-400 transition-colors duration-300">
-                  <FaPhone className="text-green-500 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
+                <li className="flex items-center gap-3 text-slate-300 group hover:text-emerald-400 transition-colors duration-300">
+                  <FaPhone className="text-emerald-500 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
                   <a href="tel:+919876543210" className="text-base">
-                    +91-9876543210
+                    +91-9417369969
                   </a>
                 </li>
-                <li className="flex items-center gap-3 text-slate-300 group hover:text-green-400 transition-colors duration-300">
-                  <FaEnvelope className="text-green-500 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
-                  <a href="mailto:support@stemelixu.com" className="text-base">
-                    support@stemelixu.com
+                <li className="flex items-center gap-3 text-slate-300 group hover:text-emerald-400 transition-colors duration-300">
+                  <FaEnvelope className="text-emerald-500 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
+                  <a href="mailto:info.stemelix@gmail.com" className="text-base">
+                    info.stemelix@gmail.com
                   </a>
                 </li>
               </ul>
@@ -159,7 +159,7 @@ const Footer = () => {
             {/* Back to Top Button */}
             <button
               onClick={scrollToTop}
-              className="group flex items-center gap-2 px-4 py-2 bg-slate-700/50 hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 text-slate-300 hover:text-white rounded-xl transition-all duration-300 transform hover:scale-105"
+              className="group flex items-center gap-2 px-4 py-2 bg-slate-700/50 hover:bg-gradient-to-r hover:from-teal-600 hover:to-emerald-600 text-slate-300 hover:text-white rounded-xl transition-all duration-300 transform hover:scale-105"
             >
               <span className="text-sm font-medium">Back to Top</span>
               <FaArrowUp className="text-sm group-hover:animate-bounce" />

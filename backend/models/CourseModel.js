@@ -1,6 +1,11 @@
 // backend/models/CourseModel.js
 import mongoose from "mongoose";
 
+
+  // }, { timestamps: true });
+
+  
+
 const lectureSchema = new mongoose.Schema({
   lectureId: {type:String, required:true},
   lectureTitle : {type:String, 
@@ -23,13 +28,43 @@ const lectureSchema = new mongoose.Schema({
   }
 },{_id:false})
 
+const quizSchema = new mongoose.Schema({
+  question: { type: String, required: true },
+  options: { type: [String], required: true },
+  answer: { type: String, required: true } 
+},{_id:false});
+
 const chapterSchema = new mongoose.Schema({
   chapterId: {type:String, required:true},
   chapterOrder: {type:Number, required:true},
   ChapterTitle: { type:String, required:true},
+  quiz: [quizSchema],
   chapterContent : [lectureSchema]
 
 }, {_id: false});
+
+const ProjectSchema = new mongoose.Schema({
+
+  projectName: {
+      type: String,
+      required: true
+      
+    },
+  
+    ProjectDescription: {
+      type: String,
+      required: true
+    },
+  
+    projectupload: {
+      type: String,
+      required: true
+    },
+    updatedAt: {
+      type: Date
+    }
+
+}, {_id:false});
 
 const CourseSchema = new mongoose.Schema({
   title: { type: String, required: true },
@@ -72,13 +107,13 @@ const CourseSchema = new mongoose.Schema({
     default: Date.now
   },
   
-  // quiz: [
-  //   {
-  //     question: { type: String, required: true },
-  //     options: { type: [String], required: true },
-  //     answer: { type: String, required: true } // correct answer
-  //   }
-  // ]
+
+  projects: [ProjectSchema] ,
+
+  enrolledStudents: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }]
 });
 
 // Compound index for efficient queries

@@ -62,6 +62,14 @@ export const loginUser = async (req, res) => {
   }
 };
 
+export const logoutUser = (req, res)=> {
+try{
+  res.status(200).json({ message: "User logged out successfully" });
+} catch (err) {
+  res.status(500).json({ message: 'Logout failed', error: err.message });
+}
+};
+
 // backend/controllers/authController.js
 export const adminLogin = async (req, res) => {
   const { email, password } = req.body;

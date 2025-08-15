@@ -39,7 +39,7 @@ const StatsCard = () => {
       <div className="bg-white/95 backdrop-blur-xl border border-white/20 rounded-3xl shadow-2xl p-8">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="text-center group">
-            <div className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <div className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-teal-600 to-emerald-600 bg-clip-text text-transparent">
               200K+
             </div>
             <div className="text-sm lg:text-base text-slate-600 mt-1">
@@ -47,7 +47,7 @@ const StatsCard = () => {
             </div>
           </div>
           <div className="text-center group">
-            <div className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+            <div className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-emerald-600 to-teal-400 bg-clip-text text-transparent">
               120+
             </div>
             <div className="text-sm lg:text-base text-slate-600 mt-1">
@@ -55,7 +55,7 @@ const StatsCard = () => {
             </div>
           </div>
           <div className="text-center group">
-            <div className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-pink-600 to-red-600 bg-clip-text text-transparent">
+            <div className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-slate-600 to-teal-600 bg-clip-text text-transparent">
               1K+
             </div>
             <div className="text-sm lg:text-base text-slate-600 mt-1">
@@ -63,7 +63,7 @@ const StatsCard = () => {
             </div>
           </div>
           <div className="text-center group">
-            <div className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+            <div className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
               30M+
             </div>
             <div className="text-sm lg:text-base text-slate-600 mt-1">

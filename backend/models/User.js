@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 
+
+
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -24,7 +26,17 @@ const userSchema = new mongoose.Schema({
     required: function() {
       return this.role === 'student';
     },
+
+    studentdetail:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Student',
+      }
   },
+
+  enrolledCourses: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Course',
+  }],
 }, { timestamps: true });
 
 export default mongoose.model('User', userSchema);

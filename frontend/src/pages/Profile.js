@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { useShop } from '../context/shopcontext';
 
 const Profile = () => {
+  const { currentUser, logoutUser } = useShop();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -20,6 +22,9 @@ const Profile = () => {
         <p><strong>Role:</strong> {user.role}</p>
         {user.instituteName && <p><strong>Institute:</strong> {user.instituteName}</p>}
       </div>
+      <button onClick={logoutUser} className="mt-4 bg-red-500 text-white py-2 px-4 rounded">
+        Logout
+      </button>
     </div>
   );
 };

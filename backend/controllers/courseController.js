@@ -1,5 +1,6 @@
 
 import Course from '../models/CourseModel.js';
+
 import { v2 as cloudinary} from 'cloudinary';
 import {v4 as uuidv4} from 'uuid';
 
@@ -214,6 +215,24 @@ export const getCourseContent = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+//project
+export const createProject = async (req, res) => {
+  try {
+    const { courseId} = req.params;
+} catch(error) {
+
+}
+};
+
+export const getUserProjects = async (req, res) => {
+  try{
+    const {userId, courseId} = req.params;
+  } catch(error){
+
+  }
+};
+
 
 
 

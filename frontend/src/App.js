@@ -15,6 +15,7 @@ import Profile from "./pages/Profile.js";
 import CoursePages from "./pages/courses/CoursePage.js"
 import CourseContent from "./pages/courses/Coursecont.js";
 import CourseDetailPage from "./pages/courses/CourseDetail.js";
+import Cart from "./pages/cart.js";
 
 // Component to handle layout with navbar spacing
 const Layout = ({ children }) => {
@@ -38,6 +39,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/policy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsAndConditions />} />
+            <Route path="/cart" element={<Cart />} />
             <Route path="/about" element={<About />} />
             {/* 3️⃣  Three isolated entry points – one per user role. */}
             <Route path="/student/*" element={<StudentDash />} />
